@@ -6,6 +6,10 @@
    ============================================================ */
 
 :root {
+  /* Uniform density: shrink the whole UI (content + sidebar + chrome) by
+     lowering mdBook's 62.5% root. Everything is rem-based, so this keeps the
+     scale consistent rather than resizing elements piecemeal. */
+  font-size: 58%;
   --ir-ink: #1d2422;
   --ir-ink-soft: #46514d;
   --ir-muted: #68746f;
@@ -31,8 +35,9 @@ html {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
 }
-.content { line-height: 1.7; }
-.content main { max-width: 760px; }
+.content { line-height: 1.5; }
+.content main { max-width: 820px; }
+.content p { line-height: 1.5; }
 .content h1,
 .content h2,
 .content h3,
@@ -41,13 +46,16 @@ html {
   letter-spacing: -0.012em;
   line-height: 1.25;
 }
-.content h1 { font-size: 2.05rem; margin-top: 0.4rem; }
+.content h1 { font-size: 1.95rem; margin-top: 0.3rem; }
 .content h2 {
-  margin-top: 2.4rem;
-  padding-bottom: 0.3rem;
+  margin-top: 1.7rem;
+  padding-bottom: 0.24rem;
   border-bottom: 1px solid var(--table-border-color);
 }
-.content h3 { margin-top: 1.8rem; }
+.content h3 { margin-top: 1.2rem; }
+.content p,
+.content ul,
+.content ol { margin: 0.6rem 0; }
 .content a { text-decoration: none; }
 .content a:hover { text-decoration: underline; text-underline-offset: 2px; }
 
@@ -69,6 +77,8 @@ html {
 
 /* ---------- Tables ---------- */
 .content table { border-collapse: collapse; }
+.content table td,
+.content table th { padding: 0.34rem 0.72rem; }
 .content table thead th {
   background: var(--ir-teal);
   color: #ffffff;
