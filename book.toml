@@ -8,8 +8,10 @@ src = "src"
 [output.html]
 git-repository-url = "https://github.com/hjosugi/irodori-docs"
 edit-url-template = "https://github.com/hjosugi/irodori-docs/edit/main/{path}"
-default-theme = "rust"
-preferred-dark-theme = "ayu"
+default-theme = "light"
+preferred-dark-theme = "navy"
+additional-css = ["irodori.css"]
+additional-js = ["irodori.js"]
 
 [output.html.search]
 enable = true

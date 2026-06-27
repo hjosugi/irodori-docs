@@ -1,0 +1,175 @@
+/* ============================================================
+   Irodori theme for mdBook
+   Brand palette mirrored from the Irodori Table project site.
+   Loaded via book.toml `additional-css`, so it layers on top of
+   mdBook's built-in themes (overrides the light + navy variables).
+   ============================================================ */
+
+:root {
+  --ir-ink: #1d2422;
+  --ir-ink-soft: #46514d;
+  --ir-muted: #68746f;
+  --ir-line: #d8dfda;
+  --ir-line-strong: #b8c5bf;
+  --ir-page: #f7f8f6;
+  --ir-paper: #ffffff;
+  --ir-wash: #edf4f1;
+  --ir-wash-2: #f1f3f7;
+  --ir-teal: #157f85;
+  --ir-teal-deep: #0f6166;
+  --ir-green: #2e7a56;
+  --ir-coral: #d9535f;
+  --ir-gold: #b56b1d;
+  --ir-violet: #6758ad;
+}
+
+/* ---------- Typography ---------- */
+html {
+  font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", sans-serif;
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+}
+.content { line-height: 1.7; }
+.content main { max-width: 760px; }
+.content h1,
+.content h2,
+.content h3,
+.content h4 {
+  font-weight: 650;
+  letter-spacing: -0.012em;
+  line-height: 1.25;
+}
+.content h1 { font-size: 2.05rem; margin-top: 0.4rem; }
+.content h2 {
+  margin-top: 2.4rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--table-border-color);
+}
+.content h3 { margin-top: 1.8rem; }
+.content a { text-decoration: none; }
+.content a:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- Top menu bar + logo ---------- */
+.menu-title { font-weight: 650; letter-spacing: -0.01em; }
+.menu-title .irodori-logo {
+  height: 1.25rem;
+  width: 1.25rem;
+  vertical-align: -0.22em;
+  margin-right: 0.5rem;
+}
+
+/* ---------- Blockquotes / notes ---------- */
+.content blockquote {
+  border-inline-start: 3px solid var(--ir-teal);
+  border-radius: 6px;
+  padding: 0.4rem 1rem;
+}
+
+/* ---------- Tables ---------- */
+.content table { border-collapse: collapse; }
+.content table thead th {
+  background: var(--ir-teal);
+  color: #ffffff;
+  border-color: var(--ir-teal-deep);
+}
+
+/* ---------- Code ---------- */
+.content pre > .buttons { opacity: 0.5; }
+.content pre code {
+  border-radius: 8px;
+}
+
+/* =====================================================================
+   LIGHT  →  Irodori "paper"
+   ===================================================================== */
+html.light {
+  --bg: #f7f8f6;
+  --fg: #1d2422;
+
+  --sidebar-bg: #edf4f1;
+  --sidebar-fg: #46514d;
+  --sidebar-non-existant: #b8c5bf;
+  --sidebar-active: #157f85;
+  --sidebar-spacer: #d8dfda;
+
+  --scrollbar: #b8c5bf;
+  --icons: #68746f;
+  --icons-hover: #157f85;
+
+  --links: #157f85;
+  --inline-code-color: #b56b1d;
+
+  --theme-popup-bg: #ffffff;
+  --theme-popup-border: #d8dfda;
+  --theme-hover: #e9eeeb;
+
+  --quote-bg: #edf4f1;
+  --quote-border: #157f85;
+
+  --table-border-color: #d8dfda;
+  --table-header-bg: #157f85;
+  --table-alternate-bg: #f1f3f7;
+
+  --searchbar-border-color: #b8c5bf;
+  --searchbar-bg: #ffffff;
+  --searchbar-fg: #1d2422;
+  --searchbar-shadow-color: #b8c5bf;
+  --searchresults-header-fg: #68746f;
+  --searchresults-border-color: #d8dfda;
+  --searchresults-li-bg: #edf4f1;
+  --search-mark-bg: #b56b1d;
+
+  --color-scheme: light;
+}
+html.light .menu-bar { border-bottom: 1px solid #e2e8e4; }
+
+/* =====================================================================
+   NAVY  →  Irodori dark (deep evergreen, brighter teal accent)
+   ===================================================================== */
+html.navy {
+  --bg: #141a18;
+  --fg: #d8ded9;
+
+  --sidebar-bg: #0f1513;
+  --sidebar-fg: #aab4af;
+  --sidebar-non-existant: #5a635f;
+  --sidebar-active: #3fb6bd;
+  --sidebar-spacer: #232b28;
+
+  --scrollbar: #4a544f;
+  --icons: #8b958f;
+  --icons-hover: #3fb6bd;
+
+  --links: #58c2c8;
+  --inline-code-color: #e0a45c;
+
+  --theme-popup-bg: #1a211e;
+  --theme-popup-border: #2c3531;
+  --theme-hover: #20292500;
+
+  --quote-bg: #1a211e;
+  --quote-border: #2f7a6f;
+
+  --table-border-color: #2c3531;
+  --table-header-bg: #1c4f52;
+  --table-alternate-bg: #181f1c;
+
+  --searchbar-border-color: #3a443f;
+  --searchbar-bg: #1a211e;
+  --searchbar-fg: #d8ded9;
+  --searchbar-shadow-color: #0c100e;
+  --searchresults-header-fg: #8b958f;
+  --searchresults-border-color: #2c3531;
+  --searchresults-li-bg: #1a211e;
+  --search-mark-bg: #b56b1d;
+
+  --color-scheme: dark;
+}
+html.navy .content table thead th {
+  background: #1c4f52;
+  color: #eafcfb;
+  border-color: #123a3c;
+}
+html.navy .menu-bar { border-bottom: 1px solid #232b28; }
