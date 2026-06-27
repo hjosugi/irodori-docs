@@ -1,0 +1,21 @@
+[book]
+title = "Irodori Table Documentation"
+authors = ["Irodori Table contributors"]
+description = "Planning, architecture, reference, and policy docs for Irodori Table."
+language = "en"
+src = "src"
+
+[output.html]
+git-repository-url = "https://github.com/hjosugi/irodori-docs"
+edit-url-template = "https://github.com/hjosugi/irodori-docs/edit/main/{path}"
+default-theme = "rust"
+preferred-dark-theme = "ayu"
+
+[output.html.search]
+enable = true
+
+[output.html.fold]
+enable = true
+level = 1
+
+# PDF output is produced in CI via the `mdbook-pdf` backend (see .github/workflows).
