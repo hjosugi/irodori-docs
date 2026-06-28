@@ -19,6 +19,7 @@
 
 # Reference
 
+- [Data source support status](data-source-support-status.md)
 - [Engine syntax reference](engine-syntax-reference.md)
 - [DB feature samples](db-feature-samples.md)
 - [External DB contract & verification](external-db-contract-and-verification.md)
@@ -31,6 +32,7 @@
 - [Overview](cheatsheets/README.md)
   - [PostgreSQL](cheatsheets/postgres.md)
   - [Neo4j](cheatsheets/neo4j.md)
+  - [QuestDB](cheatsheets/questdb.md)
 
 # Architecture Decisions
 
