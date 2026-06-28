@@ -12,6 +12,7 @@ developer and contributor documentation.
 ## How it works
 
 - [Completion and AI strategy](completion-and-ai-strategy.md)
+- [Data verification and migration](data-verification-and-migration.md)
 - [Data-source coverage strategy](data-source-coverage-strategy.md)
 - [Knowledge base](knowledge-base.md)
 

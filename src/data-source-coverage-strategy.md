@@ -80,7 +80,7 @@ MongoDB, Redis, Cassandra, CockroachDB, ClickHouse, BigQuery, Snowflake, and wir
 ### Priority Within P2: Lakehouse And Cloud Warehouse Auth
 
 - Apache Iceberg is the priority lakehouse target. Reach it through catalogs — Hive Metastore, AWS Glue, REST, and JDBC — and through AWS S3 Tables. Treat object stores (S3, GCS, Azure Blob) as first-class connection backends.
-- Execution options: embeddable engines (DuckDB, Apache DataFusion) for local reads, or Trino/Presto and warehouse-native engines for pushdown. Add Delta Lake and Apache Hudi after Iceberg.
+- Execution options: embeddable engines (DuckDB, Apache DataFusion) for local reads, or Trino/Presto and warehouse-native engines for pushdown. Current Migration Studio generates DuckDB/DuckDB-Wasm + Iceberg REST/S3 Tables attach patterns; live execution and catalog browsing are still future work. Add Delta Lake and Apache Hudi after Iceberg.
 - Snowflake needs full authentication coverage, not just password: key-pair (JWT), OAuth, external-browser/SSO, MFA/passcode, and programmatic access tokens, with warehouse/role/database context switching.
 - Apache Hive stays in scope mainly as a catalog/metastore source for Iceberg and legacy warehouses.
 - Elasticsearch/OpenSearch are the first search sources. Treat them as a deep source family, not a thin REST endpoint, because current general DB clients are weak here. Study Kibana Discover and Dev Tools console for behavior: data views, index/data-stream browsing, mappings and field capabilities, filter/query composition, saved searches, request history, explain/profile, shard/index health cues, and JSON/ES|QL-style authoring. Kibana is a behavior-only reference because it is source-available under Elastic License 2.0 / SSPL / AGPL.
@@ -117,7 +117,7 @@ These are valuable, but they should not delay the editor, completion, result han
 
 - SQL editor with dialect-aware completion. Desktop schema/table/column completion is wired from live metadata; shared completion service/API parity and broader per-engine fixtures remain a P0 cross-platform gap.
 - Object browser for databases, schemas, tables, views, indexes, constraints, routines, triggers, packages, extensions, and jobs.
-- Result grid with streaming, cancellation, copy/export, safe editing, advanced filters, and explain/profile. Inline editing is partial/skeleton today, advanced filters are not implemented, and explain/query profile is open P1 work.
+- Result grid with streaming, cancellation, copy/export, safe editing, advanced filters, and explain/profile. Current desktop editing uses Save Changes for direct single-table results with visible primary/unique keys, plus Row SQL generation for selected-row review. Advanced filters and explain/query profile remain open P1 work.
 - Distributed SQL add-ons: regions, replicas, shards/tablets/ranges, session/lock insight, follower reads, consistency notes, and topology-aware warnings.
 
 ### Time-Series
