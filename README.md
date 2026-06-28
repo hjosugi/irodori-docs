@@ -26,3 +26,7 @@ mdbook build   # static site in ./book
 
 The hand-written docs are sourced here; the generated pages are mirrored from
 irodori-table so the published book stays in one place.
+
+Public product pages such as support, privacy, disclaimer, distribution, and
+store/package registration also live here. The `irodori-table` repository keeps
+only app source, packaging templates, and generated/app-consumed documentation.

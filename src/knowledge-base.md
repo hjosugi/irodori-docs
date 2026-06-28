@@ -21,10 +21,15 @@ Use this document for the knowledge-base system itself: source registry shape,
 refresh/query workflow, source policy, and what kinds of facts belong in the local
 store. It should not duplicate the product backlog.
 
-- Product capability status belongs in `docs/feature-matrix.md`.
-- Ticket status belongs in `docs/implementation-backlog.md`.
-- Built-and-verified snapshots belong in `docs/implementation-progress.md`.
-- Parallel-worker ownership and handoffs belong in `docs/agent-coordination.md`.
+- Product capability strategy belongs in
+  [data-source-coverage-strategy.md](data-source-coverage-strategy.md) and
+  [data-source-support-status.md](data-source-support-status.md).
+- Release/task direction belongs in [roadmap-1.0.md](roadmap-1.0.md).
+- Current code ownership belongs in
+  [implementation-architecture.md](implementation-architecture.md).
+- Parallel-worker ownership and handoffs belong in
+  [parallel-agent-architecture.md](parallel-agent-architecture.md) and the
+  table repo's `docs/agent-workstreams.json`.
 
 When a task depends on vendor behavior or DB-client precedent, query this knowledge
 base first, then record the implementation outcome in the owning task doc. A

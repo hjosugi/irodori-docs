@@ -3,8 +3,9 @@
 Last updated: 2026-06-26 JST.
 
 This document covers day-to-day security controls for Irodori Table development.
-Product security requirements live in `docs/production-readiness.md`; clean-room
-and license rules live in `docs/clean-room.md` and `docs/licensing.md`.
+Release/distribution requirements live in [distribution.md](distribution.md);
+clean-room and license rules live in [clean-room.md](clean-room.md) and
+[licensing.md](licensing.md).
 
 ## Package Manager Policy
 
