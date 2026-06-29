@@ -22,6 +22,7 @@
 - [Integrated terminal](integrated-terminal.md)
 - [Headless local data API](headless-data-api.md)
 - [Knowledge base](knowledge-base.md)
+- [Repository boundaries](repository-boundaries.md)
 
 # Reference
 
