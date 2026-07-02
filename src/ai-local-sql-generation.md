@@ -29,7 +29,7 @@ A small model is unreliable on its own. The design removes that risk:
 
 ## Pipeline
 
-```
+```text
 NL prompt + connection schema
   → project   (GenSchema → GBNF grammar + SchemaIndex)
   → plan      (mentioned tables + FK joins + compact prompt)

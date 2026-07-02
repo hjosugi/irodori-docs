@@ -38,7 +38,7 @@ This is now **unblocked**. The workspace previously carried a development
 `cargo install --git` fail. That patch is gone — the workspace consumes
 `irodori-sql` from the `v0.3.0` Git tag — so the headless binary installs with:
 
-```
+```bash
 cargo install --git https://github.com/hjosugi/irodori-table irodori-server
 ```
 

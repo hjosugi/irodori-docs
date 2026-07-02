@@ -7,7 +7,7 @@ providers — run `claude` / `codex` / any tool right in the app.
 
 ## Architecture
 
-```
+```text
 xterm.js (WebGL)  ──onData──▶  pty_write
       ▲                         ▲
       │ term.write(bytes)       │  Tauri commands

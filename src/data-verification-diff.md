@@ -78,7 +78,7 @@ Comparing whole tables row-by-row over the wire is the naive (slow) approach. Th
 design is a **hierarchy that exits as early as possible** — most "are these
 equal?" questions resolve without moving the data.
 
-```
+```text
 Tier 0  COUNT + table fingerprint   →  O(1) network, answers "equal?" for the common case
 Tier 1  chunked fingerprints        →  O(chunks), localizes mismatch to key-ranges
 Tier 2  keyed row reconciliation     →  O(mismatching rows), exact row/cell diff
@@ -170,7 +170,7 @@ The execution-free planning and diff primitives live in the sibling
 driver** (engine-agnostic, like `irodori-sql`). The desktop app and headless
 server supply executors, connection pools, cancellation, and spill storage.
 
-```rust
+```rust,ignore
 // What to compare.
 pub struct DiffSpec {
     pub source: TableRef,            // engine + qualified name

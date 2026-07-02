@@ -54,10 +54,10 @@ html {
 /* ---------- Top menu bar + logo ---------- */
 .menu-title { font-weight: 650; letter-spacing: -0.01em; }
 .menu-title .irodori-logo {
-  height: 1.2rem;
-  width: 1.2rem;
-  vertical-align: -0.2em;
-  margin-right: 0.5rem;
+  height: 24px;
+  width: 24px;
+  vertical-align: -6px;
+  margin-right: 0.7rem;
 }
 
 /* ---------- Blockquote callouts ---------- */

@@ -41,7 +41,7 @@ dialect/metamodel code.
 
 ## Normalized plan IR
 
-```rust
+```rust,ignore
 pub struct QueryPlan {
     pub engine: DbEngine,
     pub analyzed: bool,            // EXPLAIN ANALYZE (actuals) vs estimate-only
