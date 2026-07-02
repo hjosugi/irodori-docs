@@ -5,8 +5,9 @@ everyone through the same files. The architecture is extension-first: core owns
 contracts, connector agents own one connector repository each, and a coordinator
 serializes registry and generated-catalog changes.
 
-The machine-readable workstream definition is
-[`agent-workstreams.json`](agent-workstreams.json). Validate it with:
+The machine-readable workstream definition lives in
+[`registry/agent-workstreams.json`](https://github.com/hjosugi/irodori-table/blob/main/registry/agent-workstreams.json).
+Validate it from an `irodori-table` checkout with:
 
 ```sh
 node tools/docs/agent-workstreams.mjs
@@ -70,8 +71,9 @@ lakehouse storage behavior without touching the desktop registry. It consumes:
 - `irodori.extension.json` and `connector.config.json` generated from the
   marketplace registry.
 - `native/source/` snapshots of desktop contracts.
-- `crates/irodori-connection`, `crates/irodori-extension`, and the generated SDK
-  as read-only contracts.
+- `../irodori-kit/irodori-connection`,
+  `../irodori-kit/irodori-extension`, `../irodori-kit/irodori-connector-abi`,
+  and the generated SDK as read-only contracts.
 
 If a connector needs a new manifest field, auth mode, connection profile field,
 transport mode, or native ABI call, that is not connector-local work. Open a
@@ -82,14 +84,15 @@ contract change in `extension-host`, `db-runtime`, or `coordinator` first.
 These files are intentionally serialized because they affect every agent:
 
 - `knowledge/engines.json`
-- `docs/extension-marketplace/index.json`
-- `docs/extension-marketplace/catalog.json`
-- `docs/extension-marketplace/connector-repositories.json`
+- `registry/catalog/index.json`
+- `registry/catalog/catalog.json`
+- `registry/catalog/connector-repositories.json`
 - `apps/desktop/src-tauri/src/db/engine.rs`
 - `apps/desktop/src-tauri/src/db/profile.rs`
-- `crates/irodori-extension/**`
-- `packages/extension-sdk/**`
-- `extension.schema.json`
+- `../irodori-kit/irodori-extension/**`
+- `../irodori-kit/irodori-connector-abi/**`
+- `../irodori-kit/packages/extension-sdk/**`
+- `../irodori-kit/packages/extension-sdk/extension.schema.json`
 - `apps/desktop/src/generated/**`
 
 Only the owning workstream should write them. Other agents should treat them as

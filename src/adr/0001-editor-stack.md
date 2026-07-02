@@ -50,7 +50,7 @@ Constraints from existing docs:
 
 Net: CM6 is the fastest route to a production-quality editor now, and the semantic layer (below) is what we carry across a possible native move — not the host.
 
-## Why tree-sitter as the *semantic* layer (answering "treesitter使う？")
+## Why tree-sitter as the *semantic* layer
 
 **Yes — but as parse-context, not the day-1 paint layer.**
 

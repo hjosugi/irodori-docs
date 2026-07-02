@@ -13,7 +13,8 @@ mdBook, a samples repo, or the private archive.
 | `irodori-samples`       | Public               | Database compose files, seed data, and DB-specific sample query projects.                                                                                                    |
 | `irodori-sql`           | Public               | Reusable SQL dialect, placeholder, metamodel, and schema-diff helpers.                                                                                                       |
 | `irodori-knowledge`     | Public               | Shared error/job/knowledge crates used by this workspace.                                                                                                                    |
-| `irodori-extension-sdk` | Public               | TypeScript extension SDK, manifest schema, extension-dev helper, generated SDK API, and starter templates.                                                                   |
+| `irodori-kit`           | Public               | Shared Rust foundation crates, extension SDK, manifest schema, extension-dev helper, generated SDK API, starter templates, and packaging templates.                           |
+| `irodori-migration`     | Public               | Execution-free migration planning and schema/data-diff primitives that can be reused outside the desktop app.                                                                |
 | `irodori-extension-*`   | Public per connector | One installable connector implementation per repository, usually generated under the local sibling parent `../irodori-extensions/`.                                          |
 | `irodori-archive`       | Private              | Historical internal planning/status snapshots, audits, private research notes, bulky discarded docs, and material that should not be public.                                 |
 
@@ -94,8 +95,8 @@ and [agent-workstreams.json](agent-workstreams.json) when assigning work to
 multiple coding agents. The default split is:
 
 - app/runtime/registry contract changes stay in `irodori-table`;
-- extension SDK, manifest schema, and template changes stay in
-  `irodori-extension-sdk`;
+- extension SDK, manifest schema, and template changes stay in `irodori-kit`
+  under `packages/extension-sdk`;
 - one connector implementation agent writes one `irodori-extension-*` repository;
 - generated docs/catalog files are updated by the agent that owns the source
   data or generator;

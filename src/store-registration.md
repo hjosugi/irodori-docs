@@ -6,7 +6,7 @@ managers. Keep secrets, tax/banking data, personal addresses, signing
 certificates, app-specific passwords, and store account IDs out of this file.
 Use a private local note or private archive for operational submission notes.
 
-Current product version: `0.3.3`.
+Current product version: `0.6.0`.
 
 ## Public listing metadata
 

@@ -2,7 +2,7 @@
 
 1.0 is the **excellent, stable core** — not every roadmap item. The strategic call
 is to ship a polished cross-platform SQL GUI for the core SQL engines and
-explicitly defer the exotic surfaces. Current version: **0.3.3**.
+explicitly defer the exotic surfaces. Current version: **0.6.0**.
 
 ## P0 — blockers (must do for 1.0)
 
@@ -12,8 +12,8 @@ explicitly defer the exotic surfaces. Current version: **0.3.3**.
    never closes.
 2. **Stabilize the build.** `cargo build` green on default features (the DB-connector
    feature refactor is mid-flight and only builds via `--features legacy-connectors`).
-   *(Done: the dev `[patch]` is removed and **`irodori-sql` v0.2.24** is cut — the
-   workspace now consumes it from the `v0.2.24` tag.)*
+   *(Done: the dev `[patch]` is removed and **`irodori-sql` v0.3.0** is cut — the
+   workspace now consumes it from the `v0.3.0` tag.)*
 3. **Core data workflows (Phase 6):** schema compare + migration preview (engine
    already exists in `irodori-sql/schema.rs` — mostly wiring), editable results +
    table designer + index/constraint UI, data compare + safe bulk edit.

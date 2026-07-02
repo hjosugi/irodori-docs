@@ -24,8 +24,8 @@ flowchart LR
   tauri["Tauri command bridge<br/>apps/desktop/src-tauri/src"]
   db["DB runtime<br/>src-tauri/src/db"]
   adapters["Engine adapters<br/>postgres mysql sqlite mssql duck etc."]
-  crates["Shared Rust crates<br/>crates/irodori-*"]
-  sdk["Extension SDK<br/>packages/extension-sdk"]
+  crates["Shared Rust crates<br/>../irodori-kit/irodori-*"]
+  sdk["Extension SDK<br/>../irodori-kit/packages/extension-sdk"]
   samples["Sample DBs<br/>../irodori-samples/*"]
   external["External foundations<br/>irodori-sql typeship irodori-knowledge"]
 
@@ -46,17 +46,18 @@ flowchart LR
 | --- | --- |
 | `apps/desktop/src/` | React UI, workbench layout, commands, settings, editor/result interactions, client stores. |
 | `apps/desktop/src-tauri/src/` | Tauri command handlers, database sessions, Git, terminal, local AI, security state, background jobs. |
-| `crates/irodori-connection/` | Portable connection profile model. |
-| `crates/irodori-security/` | Security/audit-facing shared model. |
-| `crates/irodori-core/` | Shared core model and composition around connection/security/job foundations. |
-| `crates/irodori-completion/` | Metadata-driven completion and inspection logic. |
-| `crates/irodori-generate/` | Local SQL generation planning, schema projection, runtime, verification. |
-| `crates/irodori-extension/` | Rust definitions for extension API generation. |
-| `crates/irodori-io/` | Import/export encoders and tabular data helpers. |
-| `crates/irodori-proxy/` | Direct/SSH/proxy transport planning and forwarding. |
-| `crates/irodori-secure-store/` | OS secret store integration boundary. |
-| `crates/irodori-server/` | Optional local HTTP API/headless surface. |
-| `packages/extension-sdk/` | TypeScript SDK and templates for extension authors. |
+| `../irodori-kit/irodori-connection/` | Portable connection profile model. |
+| `../irodori-kit/irodori-security/` | Security/audit-facing shared model. |
+| `../irodori-kit/irodori-core/` | Shared core model and composition around connection/security/job foundations. |
+| `../irodori-kit/irodori-completion/` | Metadata-driven completion and inspection logic. |
+| `../irodori-kit/irodori-connector-abi/` | Native connector ABI helpers and export macro. |
+| `../irodori-kit/irodori-generate/` | Local SQL generation planning, schema projection, runtime, verification. |
+| `../irodori-kit/irodori-extension/` | Rust definitions for extension API generation. |
+| `../irodori-kit/irodori-io/` | Import/export encoders and tabular data helpers. |
+| `../irodori-kit/irodori-proxy/` | Direct/SSH/proxy transport planning and forwarding. |
+| `../irodori-kit/irodori-secure-store/` | OS secret store integration boundary. |
+| `../irodori-kit/irodori-server/` | Optional local HTTP API/headless surface. |
+| `../irodori-kit/packages/extension-sdk/` | TypeScript SDK and templates for extension authors. |
 | `tools/` | Code generation, docs checks, extension validation, security checks. |
 | `../irodori-samples/` | Sibling checkout with database fixtures and compose files for manual and integration testing. |
 
@@ -105,9 +106,15 @@ Frontend rules of thumb:
   `role="dialog"`/`aria-modal`. Do not hand-roll modal overlays.
 - Wrap fallible subtrees in `ErrorBoundary` so a render error degrades locally
   instead of white-screening the whole app (the root is wrapped in `App.tsx`).
-- Pull cohesive orchestration out of the `AppWorkbench` shell into hooks under
-  `src/app/hooks/` (e.g. `useResultGridScroll` / `useResultGridFiltering` /
-  `useResultGridSelection`) rather than growing the shell.
+- Pull cohesive workbench command/state orchestration out of the
+  `AppWorkbench` shell into kebab-case controller hooks under
+  `apps/desktop/src/app/controllers/`, such as `use-editor-commands.ts`,
+  `use-result-export.ts`, and `use-workspace-actions.ts`.
+- Keep `apps/desktop/src/app/hooks/` for UI-local extracted hooks whose naming
+  already follows the older camelCase pattern, such as result-grid scroll,
+  filtering, and selection helpers. New cross-feature orchestration should use
+  `controllers/`; new UI-local hooks should stay near the UI surface or in
+  `hooks/` when they are shared inside `src/app`.
 - Split multi-tab dialogs into one component per tab (e.g.
   `features/settings/tabs/`); the dialog file stays a thin shell.
 - Use the design tokens in `styles/base.css` for spacing, radius, and
@@ -168,9 +175,9 @@ flowchart LR
   tests["cargo test export_typescript_bindings"]
   generated["apps/desktop/src/generated/irodori-api.ts"]
   ui["React features"]
-  extRust["crates/irodori-extension"]
-  extGenerated["packages/extension-sdk/src/generated"]
-  sdk["packages/extension-sdk"]
+  extRust["../irodori-kit/irodori-extension"]
+  extGenerated["../irodori-kit/packages/extension-sdk/src/generated"]
+  sdk["../irodori-kit/packages/extension-sdk"]
   check["typegen drift check<br/>npm run typegen:check"]
 
   rust --> tests --> generated --> ui
@@ -273,7 +280,7 @@ Extensions are intentionally not the same as app internals.
 ```mermaid
 flowchart LR
   manifest["irodori.extension.json"]
-  sdk["TypeScript SDK<br/>packages/extension-sdk"]
+  sdk["TypeScript SDK<br/>../irodori-kit/packages/extension-sdk"]
   generated["generated extension API"]
   host["desktop extension host/store"]
   app["workbench commands/results/themes"]
@@ -286,8 +293,9 @@ flowchart LR
 
 Extension rules:
 
-- Public extension payloads belong in `crates/irodori-extension`.
-- SDK convenience wrappers belong in `packages/extension-sdk/src`.
+- Public extension payloads belong in `../irodori-kit/irodori-extension`.
+- SDK convenience wrappers belong in
+  `../irodori-kit/packages/extension-sdk/src`.
 - App-only plugin registry and loading state belongs under
   `apps/desktop/src/features/extensions`.
 - Templates must stay permissively licensed and validate through
@@ -298,12 +306,13 @@ Extension rules:
 Parallel work is organized around explicit workstreams rather than informal file
 ownership. The detailed policy lives in
 [`parallel-agent-architecture.md`](parallel-agent-architecture.md), and the
-machine-readable source is [`agent-workstreams.json`](agent-workstreams.json).
+machine-readable source is
+[`registry/agent-workstreams.json`](https://github.com/hjosugi/irodori-table/blob/main/registry/agent-workstreams.json).
 
 The key split is:
 
 - One coordinator agent owns registry and generated-catalog source files:
-  `knowledge/engines.json`, `docs/extension-marketplace/*.json`, and
+  `knowledge/engines.json`, `registry/catalog/*.json`, and
   `apps/desktop/src-tauri/src/db/engine.rs`.
 - Connector agents are repeatable and own exactly one generated sibling
   repository under `../irodori-extensions/irodori-extension-*`.

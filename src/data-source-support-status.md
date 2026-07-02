@@ -22,9 +22,9 @@ Status legend:
 - **Pending** — recognized by the engine enum, adapter scaffolding exists, but the
   connector intentionally returns a "not ready" result.
 - **Extension** — recognized by the engine enum and published through the
-  extension marketplace; the app browses `docs/extension-marketplace/catalog.json`
-  and install/details stay in `docs/extension-marketplace/index.json` instead of
-  being compiled into the core desktop build.
+  extension marketplace; the app browses `registry/catalog/catalog.json` and
+  install/details stay in `registry/catalog/index.json` instead of being compiled
+  into the core desktop build.
 - **Recognized, extension required** — present in `DbEngine` but rejected at
   connect by `is_unimplemented_wire()` until an installable connector extension
   is present.
@@ -33,38 +33,40 @@ Status legend:
 
 ## 1. Wired engines (selectable and connectable today)
 
-| Engine | `DbEngine` id | Wire / driver | Adapter file | Port | Maturity |
-|---|---|---|---|---|---|
-| PostgreSQL | `postgres` | Postgres / sqlx | `db/postgres.rs` | 5432 | Verified |
-| MySQL | `mysql` | MySQL / sqlx | `db/mysql.rs` | 3306 | Verified |
-| MariaDB | `mariadb` | MySQL wire / sqlx | (via `mysql.rs`) | 3306 | Verified |
-| SQLite | `sqlite` | file / sqlx | `db/sqlite.rs` | — | Verified (unit) |
-| Oracle | `oracle` | Thin TNS / `oracle-rs` | `db/oracle.rs` | 1521 | Verified |
-| SQL Server | `sqlserver` | TDS / tiberius | `db/mssql.rs` | 1433 | Verified |
-| DuckDB | `duckdb` | embedded libduckdb | `db/duck.rs` | — | Verified |
-| MotherDuck | `motherduck` | DuckDB service / extension | `irodori.motherduck` | 443 | Extension |
-| CockroachDB | `cockroachdb` | Postgres wire / sqlx | (via `postgres.rs`) | 26257 | Verified |
-| YugabyteDB (YSQL) | `yugabytedb` | Postgres wire / sqlx | (via `postgres.rs`) | 5433 | Wired |
-| Redshift | `redshift` | Postgres wire / sqlx | (via `postgres.rs`) | 5439 | Wired (AWS, no local container) |
-| TimescaleDB | `timescaledb` | Postgres wire / sqlx | (via `postgres.rs`) | 5432 | Verified |
-| Neon | `neon` | Postgres wire / sqlx | (via `postgres.rs`) | 5432 | Wired |
-| H2 | `h2` | Postgres wire / sqlx | (via `postgres.rs`) | 5435 | Wired (experimental) |
-| TiDB | `tidb` | MySQL wire / sqlx | (via `mysql.rs`) | 4000 | Wired |
-| MongoDB | `mongodb` | document / mongodb | `db/mongo.rs` | 27017 | Verified |
-| Neo4j | `neo4j` | Bolt / neo4rs | `db/neo4j.rs` | 7687 | Wired (graph) — see cheatsheet |
-| Redis | `redis` | RESP / redis | `db/redis.rs` | 6379 | Wired (adapter) |
-| Cassandra | `cassandra` | CQL / scylla driver | `db/cassandra.rs` | 9042 | Wired (adapter) |
-| ClickHouse | `clickhouse` | HTTP | `db/clickhouse.rs` | 8123 | Wired (HTTP client) |
-| Snowflake | `snowflake` | HTTP | `db/snowflake.rs` | 443 | Wired (password/JWT subset) |
-| BigQuery | `bigquery` | HTTP | `db/bigquery.rs` | 443 | Wired (HTTP client) |
-| Bigtable | `bigtable` | gRPC/HTTP | `db/bigtable.rs` | 443 | Wired (adapter) |
-| InfluxDB | `influxdb` | HTTP (SQL/v3) | `db/influx.rs` | 8086 | Wired (adapter) |
-| ScyllaDB | `scylladb` | CQL / scylla driver | (via `cassandra.rs`) | 9042 | Wired (CQL-compatible) |
-| QuestDB | `questdb` | Postgres wire / sqlx | (via `postgres.rs`) | 8812 | Wired |
+| Engine | `DbEngine` id | Wire / driver | Adapter file | Port | Maturity | Shipped release build |
+|---|---|---|---|---|---|---|
+| PostgreSQL | `postgres` | Postgres / sqlx | `db/postgres.rs` | 5432 | Verified | Built-in |
+| MySQL | `mysql` | MySQL / sqlx | `db/mysql.rs` | 3306 | Verified | Built-in |
+| MariaDB | `mariadb` | MySQL wire / sqlx | (via `mysql.rs`) | 3306 | Verified | Built-in |
+| SQLite | `sqlite` | file / sqlx | `db/sqlite.rs` | — | Verified (unit) | Built-in |
+| Oracle | `oracle` | Thin TNS / `oracle-rs` | `db/oracle.rs` | 1521 | Verified | `legacy-connectors` |
+| SQL Server | `sqlserver` | TDS / tiberius | `db/mssql.rs` | 1433 | Verified | `legacy-connectors` |
+| DuckDB | `duckdb` | embedded libduckdb | `db/duck.rs` | — | Verified | `duckdb` |
+| MotherDuck | `motherduck` | DuckDB service / extension | `irodori.motherduck` | 443 | Extension | Marketplace extension |
+| CockroachDB | `cockroachdb` | Postgres wire / sqlx | (via `postgres.rs`) | 26257 | Verified | Built-in |
+| YugabyteDB (YSQL) | `yugabytedb` | Postgres wire / sqlx | (via `postgres.rs`) | 5433 | Wired | Built-in |
+| Redshift | `redshift` | Postgres wire / sqlx | (via `postgres.rs`) | 5439 | Wired (AWS, no local container) | Built-in |
+| TimescaleDB | `timescaledb` | Postgres wire / sqlx | (via `postgres.rs`) | 5432 | Verified | Built-in |
+| Neon | `neon` | Postgres wire / sqlx | (via `postgres.rs`) | 5432 | Wired | Built-in |
+| H2 | `h2` | Postgres wire / sqlx | (via `postgres.rs`) | 5435 | Wired (experimental) | Built-in |
+| TiDB | `tidb` | MySQL wire / sqlx | (via `mysql.rs`) | 4000 | Wired | Built-in |
+| MongoDB | `mongodb` | document / mongodb | `db/mongo.rs` | 27017 | Verified | `legacy-connectors` |
+| Neo4j | `neo4j` | Bolt / neo4rs | `db/neo4j.rs` | 7687 | Wired (graph) — see cheatsheet | `legacy-connectors` |
+| Redis | `redis` | RESP / redis | `db/redis.rs` | 6379 | Wired (adapter) | `legacy-connectors` |
+| Cassandra | `cassandra` | CQL / scylla driver | `db/cassandra.rs` | 9042 | Wired (adapter) | `legacy-connectors` |
+| ClickHouse | `clickhouse` | HTTP | `db/clickhouse.rs` | 8123 | Wired (HTTP client) | `legacy-connectors` |
+| Snowflake | `snowflake` | HTTP | `db/snowflake.rs` | 443 | Wired (password/JWT subset) | `legacy-connectors` |
+| BigQuery | `bigquery` | HTTP | `db/bigquery.rs` | 443 | Wired (HTTP client) | `legacy-connectors` |
+| Bigtable | `bigtable` | gRPC/HTTP | `db/bigtable.rs` | 443 | Wired (adapter) | `legacy-connectors` |
+| InfluxDB | `influxdb` | HTTP (SQL/v3) | `db/influx.rs` | 8086 | Wired (adapter) | `legacy-connectors` |
+| ScyllaDB | `scylladb` | CQL / scylla driver | (via `cassandra.rs`) | 9042 | Wired (CQL-compatible) | `legacy-connectors` |
+| QuestDB | `questdb` | Postgres wire / sqlx | (via `postgres.rs`) | 8812 | Wired | Built-in |
 
 > Maturity is a coverage signal, not a UX guarantee. "Wired (adapter)" means the
 > connect/query path exists; first-class browsing, completion, editing,
 > explain/profile, and visualization per source remain tracked by SRC tickets.
+> Release builds pass `--features legacy-connectors,duckdb`; local default
+> development builds may omit feature-gated connectors for speed.
 
 ## 2. Pending (recognized, scaffolded, returns "not ready")
 
@@ -75,7 +77,7 @@ not-ready error, list it here instead of mixing it with production connectors.
 
 These appear in `DbEngine` but `is_unimplemented_wire()` rejects them before a
 connection is opened. Most public connector targets ask the user to install
-the matching installable connector from `docs/extension-marketplace/index.json`.
+the matching installable connector from `registry/catalog/index.json`.
 
 | Engine | `DbEngine` id | Family | Closest existing wire | Note |
 |---|---|---|---|---|

@@ -64,7 +64,7 @@ sources** and **large tables** first.
 | Info-schema metamodel (keys, columns) | `irodori-sql/src/metamodel.rs` | auto-pick key/compare columns |
 | Bounded streaming + cancellation | `src-tauri/src/db/stream.rs` `StreamCtx` | pull manifests without OOM |
 | Disk spill to temp SQLite + windowed paging | `src-tauri/src/db/spill.rs` `ResultStore` | hold million-row manifests off-heap |
-| Headless read-only API + audit + guard | `crates/irodori-server/src/server.rs` `ApiServer::dispatch` | expose `/v1/diff` |
+| Headless read-only API + audit + guard | `../irodori-kit/irodori-server/src/server.rs` `ApiServer::dispatch` | expose `/v1/diff` |
 | Cell value type | `src-tauri/src/db/query.rs` `Cells = Vec<serde_json::Value>` | the comparison unit |
 | Selected-row SQL helper | `apps/desktop/src/features/results/row-change-sql.ts` | reviewable per-row repair/update SQL |
 
@@ -163,12 +163,12 @@ Each rule is opt-in per column via a `ColumnCanon` policy so the user controls
 intent (a genuine type change *should* diff). All of this stays **push-down**
 (rendered into the hash SQL) so it runs in the database, not the client.
 
-## Crate design — `irodori-diff`
+## Library design — `irodori-migration`
 
-New workspace crate `crates/irodori-diff`. Pure logic + SQL generation; **no DB
-driver** (engine-agnostic, like `irodori-sql`). It depends on `irodori-sql`
-(dialect, migration primitives, metamodel) and `serde_json` (cell values), and is
-driven by an executor the host supplies.
+The execution-free planning and diff primitives live in the sibling
+`irodori-migration` crate. It stays pure logic + SQL generation with **no DB
+driver** (engine-agnostic, like `irodori-sql`). The desktop app and headless
+server supply executors, connection pools, cancellation, and spill storage.
 
 ```rust
 // What to compare.
@@ -234,7 +234,8 @@ default because it avoids moving raw data.
 
 ## UI — make the diff legible
 
-The complaint is "diffがわかりにくい". Presentation tiers mirror the algorithm:
+The problem is that large data diffs are hard to understand. Presentation tiers
+mirror the algorithm:
 
 - **Summary**: equal/not, counts per side, % rows changed, fingerprint match,
   coverage (full vs sampled), elapsed.
@@ -259,12 +260,12 @@ The complaint is "diffがわかりにくい". Presentation tiers mirror the algo
 
 ## Phased plan
 
-1. **Primitives**: make `row_hash_expression`, `normalized_column_value`,
-   `keyed_diff_sql` `pub` in `irodori-sql`; add the canonicalization extensions
+1. **Primitives**: keep row hash, keyed diff, bucket fingerprint, and checksum
+   SQL in `irodori-migration`; add the canonicalization extensions
    (numeric/timestamp/float/oracle-empty). Unit-test SQL rendering per engine.
-2. **Crate skeleton**: `crates/irodori-diff` with `DiffSpec`/`DiffReport`,
-   `fingerprint_sql`/`bucket_fingerprint_sql` (Tier 0/1) + `SqlExecutor` trait.
-   Tests with a SQLite executor on synthetic data.
+2. **Report API**: extend `irodori-migration` with `DiffSpec`/`DiffReport`,
+   `fingerprint_sql`/`bucket_fingerprint_sql` (Tier 0/1), and a host-supplied
+   `SqlExecutor` trait. Tests can use a SQLite executor on synthetic data.
 3. **Tier 2 reconcile**: streaming sorted-merge + cell diff; same-engine
    fast-path via `keyed_diff_sql`.
 4. **Tauri command + Verify panel** (single live source↔target).
@@ -274,8 +275,7 @@ The complaint is "diffがわかりにくい". Presentation tiers mirror the algo
 
 ## Repo boundary
 
-Start as `crates/irodori-diff` inside this workspace (fast iteration, shares
-`irodori-sql`). Promote to its own repo (`hjosugi/irodori-diff`, consumed by tag
-like `irodori-sql`) once the `DiffSpec`/`DiffReport`/`SqlExecutor` contract is
-stable and there's an independent release/test boundary — matching the project's
-"earn the crate boundary by real implementation" rule (ROADMAP, Non-Negotiables).
+Data-diff primitives stay in the existing `irodori-migration` sibling repo until
+there is evidence that a narrower crate or repository boundary would pay for
+itself. The desktop app consumes that crate by tag and keeps live connection,
+job, and UI orchestration in `irodori-table`.

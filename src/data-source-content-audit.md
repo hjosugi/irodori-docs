@@ -10,7 +10,7 @@ Audited artifacts:
 - `apps/desktop/src/sql/default-snippets.json` — engine-grouped snippet source
   (`snippets.ts` is the loader/validator; snippets are **engine-scoped**, not
   one flat set).
-- `docs/extension-marketplace/catalog.json` — connector metadata.
+- `registry/catalog/catalog.json` — connector metadata.
 - `docs/cheatsheets/` — per-engine cheatsheets.
 
 ## Verdict

@@ -7,20 +7,25 @@ for high-performance drivers, parsers, renderers, and formatters.
 
 ## Current Implementation
 
-- Manifest schema: [`extension.schema.json`](https://github.com/hjosugi/irodori-table/blob/main/extension.schema.json), for files
+- Manifest schema: [`extension.schema.json`](https://github.com/hjosugi/irodori-kit/blob/main/packages/extension-sdk/extension.schema.json), for files
   named `irodori.extension.json`.
-- Rust source of truth: [`crates/irodori-extension`](https://github.com/hjosugi/irodori-table/blob/main/crates/irodori-extension).
+- Rust source of truth: [`irodori-extension`](https://github.com/hjosugi/irodori-kit/tree/main/irodori-extension).
 - Generated SDK contracts:
-  [`packages/extension-sdk/src/generated/irodori-extension-api.ts`](https://github.com/hjosugi/irodori-table/blob/main/packages/extension-sdk/src/generated/irodori-extension-api.ts).
+  [`packages/extension-sdk/src/generated/irodori-extension-api.ts`](https://github.com/hjosugi/irodori-kit/blob/main/packages/extension-sdk/src/generated/irodori-extension-api.ts).
 - TypeScript SDK:
-  [`packages/extension-sdk/src/index.ts`](https://github.com/hjosugi/irodori-table/blob/main/packages/extension-sdk/src/index.ts).
+  [`packages/extension-sdk/src/index.ts`](https://github.com/hjosugi/irodori-kit/blob/main/packages/extension-sdk/src/index.ts).
 - Local dev CLI:
-  [`packages/extension-sdk/bin/irodori-extension-dev.mjs`](https://github.com/hjosugi/irodori-table/blob/main/packages/extension-sdk/bin/irodori-extension-dev.mjs).
+  [`packages/extension-sdk/bin/irodori-extension-dev.mjs`](https://github.com/hjosugi/irodori-kit/blob/main/packages/extension-sdk/bin/irodori-extension-dev.mjs).
 - Templates:
-  [`packages/extension-sdk/templates/typescript-basic`](https://github.com/hjosugi/irodori-table/blob/main/packages/extension-sdk/templates/typescript-basic)
-  and [`packages/extension-sdk/templates/wasm-sql-dialect`](https://github.com/hjosugi/irodori-table/blob/main/packages/extension-sdk/templates/wasm-sql-dialect).
-- Example:
-  [`examples/extensions/markdown-result-export`](https://github.com/hjosugi/irodori-table/blob/main/examples/extensions/markdown-result-export).
+  [`packages/extension-sdk/templates/typescript-basic`](https://github.com/hjosugi/irodori-kit/tree/main/packages/extension-sdk/templates/typescript-basic)
+  and [`packages/extension-sdk/templates/wasm-sql-dialect`](https://github.com/hjosugi/irodori-kit/tree/main/packages/extension-sdk/templates/wasm-sql-dialect).
+- Native connector examples:
+  [`irodori-extension-duckdb`](https://github.com/hjosugi/irodori-extension-duckdb)
+  and [`irodori-extension-memgraph`](https://github.com/hjosugi/irodori-extension-memgraph).
+- Native connector host: `irodori-table` includes the dynamic-library extension
+  host, manifest/integrity checks, and marketplace catalog plumbing. The shared
+  native ABI helper/macro lives in
+  [`irodori-connector-abi`](https://github.com/hjosugi/irodori-kit/tree/main/irodori-connector-abi).
 
 ## Manifest
 
@@ -141,7 +146,6 @@ requests.
 
 ```sh
 node packages/extension-sdk/bin/irodori-extension-dev.mjs packages/extension-sdk/templates/typescript-basic --once
-node packages/extension-sdk/bin/irodori-extension-dev.mjs examples/extensions/markdown-result-export
 ```
 
 The `--once` mode is useful for CI and smoke checks. Without it, the command stays

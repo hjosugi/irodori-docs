@@ -1,4 +1,4 @@
-# Local SQL generation (軽量llama × 完璧な構文木)
+# Local SQL generation
 
 Irodori Table can generate SQL from natural language with a **lightweight local
 model**, designed so correctness comes from a real SQL grammar rather than from
@@ -11,13 +11,13 @@ this is an opt-in, offline generation path.
 
 A small model is unreliable on its own. The design removes that risk:
 
-- **完璧な構文木** — a real, dialect-aware SQL parser + AST + GBNF grammar
+- **Grammar-backed SQL structure** — a real, dialect-aware SQL parser + AST + GBNF grammar
   (`irodori-sql`: `ast.rs`, `parser.rs`, `grammar.rs`).
 - **Grammar-constrained decoding** — the model can only sample tokens the GBNF
   grammar allows, so output is always syntactically valid.
 - **Schema projection** — table/column names become *closed* grammar terminals,
   so a hallucinated relation is literally unsamplable.
-- **事前の調整 (planning)** — tables and foreign-key joins are resolved
+- **Planning before decoding** — tables and foreign-key joins are resolved
   deterministically before the model runs, shrinking its job so a 0.5B model
   suffices.
 - **Scoped grammar** — on large schemas the GBNF is projected down to just the

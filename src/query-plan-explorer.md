@@ -10,11 +10,11 @@ Status: **design** (greenfield — no plan handling exists today beyond
 
 ## Goals (from the ask)
 
-- 実行計画を見る + 分析する — capture and analyze the plan.
-- 自然言語で説明 — narrate what the plan does and why it's slow.
-- 指標の味方・解説 — teach how to *read* each metric (cost, rows, loops, time…).
-- 視覚的に見やすく — a flame/tree view where the hot path pops.
-- 全データベース対応 — one normalized model across PG/MySQL/Oracle/SQL Server/
+- Capture and analyze execution plans.
+- Explain the plan in natural language and identify likely bottlenecks.
+- Teach how to read metrics such as cost, rows, loops, and elapsed time.
+- Visualize the hot path with a tree/flame view.
+- Normalize plan data across PG/MySQL/Oracle/SQL Server/
   SQLite/Snowflake/Hive/Trino/DuckDB…
 
 ## The core problem: every engine's EXPLAIN is different
@@ -112,7 +112,7 @@ Each finding maps to a node so the UI can highlight it on the tree.
 The IR (not raw EXPLAIN text) is what's fed to the model, so the prompt is small,
 engine-neutral, and consistent across providers.
 
-## Metric glossary — "指標の味方・解説"
+## Metric glossary
 
 A small, structured glossary keyed by `(engine, metric)` powers inline tooltips
 and a "how to read this plan" panel:
@@ -127,7 +127,7 @@ and a "how to read this plan" panel:
 - **width**: bytes per row — wide rows = more memory/IO.
 - SQL Server cost %, MySQL `filtered`/`rows`, Oracle `Cardinality`/`Bytes`, etc.
 
-This directly serves "指標の味方" — the user learns *what each number means and how
+This directly serves the metric glossary: the user learns *what each number means and how
 to act on it*, inline where the number appears.
 
 ## Visualization — make the hot path pop
@@ -154,7 +154,8 @@ Plain `EXPLAIN` is read-only and always safe. `EXPLAIN ANALYZE` **runs** the
 statement — dangerous for DML. Rules:
 
 - Classify the statement with the existing read-only guard
-  (`crates/irodori-server` `guard::classify`, already used for the headless API).
+  (`../irodori-kit/irodori-server` `guard::classify`, already used for the
+  headless API).
 - Offer ANALYZE freely for read-only queries.
 - For writes: either refuse ANALYZE, or wrap in a transaction the engine can roll
   back (`BEGIN; EXPLAIN ANALYZE …; ROLLBACK;` on PG) with a loud confirm. Never
@@ -162,11 +163,11 @@ statement — dangerous for DML. Rules:
 
 ## Where the code lives
 
-- **`irodori-plan` (new, engine-agnostic).** The IR, per-engine EXPLAIN SQL +
+- **Query-plan module (new, engine-agnostic).** The IR, per-engine EXPLAIN SQL +
   parsers, the heuristic rules, and the deterministic narrative + glossary.
-  Depends on `irodori-sql` (dialect) only; no DB driver. Start as
-  `crates/irodori-plan`, promote to its own repo once the IR is stable (same
-  "earn the boundary" rule as `irodori-sql`/`irodori-diff`).
+  Depends on `irodori-sql` (dialect) only; no DB driver. Start app-local under
+  `apps/desktop/src-tauri/src/query_plan/`, then promote to a sibling shared
+  repo only after the IR has a stable release/test boundary.
 - **Capture command.** Tauri `explain_query(connection, sql, { analyze }) ->
   QueryPlan` in `src-tauri/src/db/` — issues the engine's EXPLAIN via the existing
   pool and hands the output to `irodori-plan`. Headless: `POST /v1/explain`.
