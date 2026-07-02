@@ -65,7 +65,7 @@ make check
 ```
 
 A connector agent can implement Hive, Snowflake, Oracle, Iceberg, vector DBs, or
-object-store behavior without touching the desktop registry. It consumes:
+lakehouse storage behavior without touching the desktop registry. It consumes:
 
 - `irodori.extension.json` and `connector.config.json` generated from the
   marketplace registry.

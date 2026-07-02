@@ -84,7 +84,6 @@ the matching installable connector from `docs/extension-marketplace/index.json`.
 | Milvus | `milvus` | Vector | — | Installable vector connector extension. |
 | Pinecone | `pinecone` | Vector (HTTP) | — | Installable vector connector extension. |
 | Cloud Spanner | `cloudSpanner` | Distributed SQL / Google API | `CloudSpanner` | Installable connector; Spanner SQL/catalog handling is separate from Postgres wire. |
-| Generic KV Store | `kvStore` | Key-value | `KeyValue` | Installable provider-neutral connector extension for KV systems. |
 | Trino / Presto | `trinoPresto` | Federated SQL | `Jdbc` | Installable JDBC-style connector extension. |
 | Firebird | `firebird` | Relational | `Jdbc` | Installable JDBC-style connector extension. |
 | Databricks / Spark SQL | `databricks` | Warehouse | `Jdbc` | Installable SQL Warehouse connector extension. |
@@ -98,7 +97,6 @@ the matching installable connector from `docs/extension-marketplace/index.json`.
 | Amazon Athena | `athena` | Lakehouse / query-engine | `Lakehouse` | Installable Athena/Glue/workgroup connector extension. |
 | Apache Iceberg | `iceberg` | Lakehouse | `Lakehouse` | Installable catalog-backed Iceberg connector extension. |
 | AWS S3 Tables | `s3Tables` | Lakehouse | `Lakehouse` | Installable managed Iceberg connector extension. |
-| Object stores: S3 / GCS / Azure Blob | `objectStore` | Object-store | `ObjectStore` | Installable object-store browser/source connector extension. |
 | Delta Lake | `deltaLake` | Lakehouse | `Lakehouse` | Installable Delta Lake connector extension. |
 | Apache Hudi | `hudi` | Lakehouse | `Lakehouse` | Installable Hudi connector extension. |
 
