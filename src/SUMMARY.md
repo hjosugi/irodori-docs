@@ -2,8 +2,14 @@
 
 [Introduction](introduction.md)
 
+# Getting started
+
+- [Install guide](install-guide.md)
+
 # Development
 
+- [Windows development](windows-development.md)
+- [macOS development](macos-development.md)
 - [Linux development](linux-development.md)
 - [Extension development](extension-development.md)
 - [Internationalization](i18n.md)

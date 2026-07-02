@@ -1,15 +1,52 @@
-<!-- # Linux Development & Debugging Guide (Arch Linux / CachyOS) -->
+# Linux Development
 
-This guide provides instructions for setting up the development environment, running, and debugging the Tauri desktop client on Linux, with specific workarounds and optimizations for Arch Linux and CachyOS.
+This guide covers local desktop development on Linux, including the common
+WebKitGTK dependencies and troubleshooting steps for Arch Linux, CachyOS,
+Debian, Ubuntu, Fedora, and similar desktop distributions.
 
 ---
 
 ## 1. System Dependencies
 
-Tauri v2 requires GTK3, WebKit2Gtk (using the modern `4.1` API), libsoup3, and OpenSSL. Install them on Arch Linux / CachyOS via `pacman`:
+Required local versions are pinned in the app repository: Node.js 24.x in
+`.nvmrc` and Rust 1.96.0 in `rust-toolchain.toml`.
+
+Tauri v2 requires GTK3, WebKitGTK using the `4.1` API, libsoup3, OpenSSL,
+pkg-config, and the normal app indicator/image packages used by Linux desktop
+bundles. The x86_64 Linux build also uses `mold` because `.cargo/config.toml`
+passes `-fuse-ld=mold`.
+
+### Debian / Ubuntu
 
 ```bash
-sudo pacman -S --needed base-devel webkit2gtk-4.1 libsoup3 openssl
+sudo apt-get update
+sudo apt-get install -y \
+  build-essential curl file libayatana-appindicator3-dev librsvg2-dev \
+  libssl-dev libwebkit2gtk-4.1-dev libxdo-dev mold pkg-config wget
+```
+
+### Fedora
+
+```bash
+sudo dnf install \
+  gcc gcc-c++ make pkgconf-pkg-config webkit2gtk4.1-devel \
+  libsoup3-devel openssl-devel libxdo-devel librsvg2-devel mold
+```
+
+### Arch Linux / CachyOS
+
+```bash
+sudo pacman -S --needed \
+  base-devel webkit2gtk-4.1 libsoup3 openssl pkgconf mold
+```
+
+After installing the OS packages, install the pinned Rust toolchain and desktop
+dependencies, then run the repository doctor:
+
+```bash
+rustup toolchain install
+make setup
+make doctor
 ```
 
 ### AppImage FUSE Dependency

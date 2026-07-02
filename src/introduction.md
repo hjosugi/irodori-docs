@@ -5,7 +5,10 @@ developer and contributor documentation.
 
 ## Getting started
 
-- [Linux development](linux-development.md) — set up and run locally
+- [Install guide](install-guide.md) — download and launch the desktop app
+- [Windows development](windows-development.md) — set up and run locally on Windows
+- [macOS development](macos-development.md) — set up and run locally on macOS
+- [Linux development](linux-development.md) — set up and run locally on Linux
 - [Extension development](extension-development.md) — build on the extension SDK
 - [Internationalization](i18n.md) — UI languages and translation keys
 
