@@ -9,8 +9,9 @@ Download the current desktop build from
 <https://github.com/hjosugi/irodori-table/releases>. The Linux build is the most
 actively exercised preview target.
 
-For source builds, follow [Install guide](install-guide.md) first. It covers the
-pinned Node/Rust toolchains and platform packages.
+For source builds, use the platform development guide for your OS instead of the
+desktop install guide: [Windows](windows-development.md),
+[macOS](macos-development.md), or [Linux](linux-development.md).
 
 ## Create A Connection
 

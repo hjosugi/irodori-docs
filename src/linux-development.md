@@ -49,12 +49,28 @@ make setup
 make doctor
 ```
 
+### Build temp directory
+
+If `/tmp` is a small tmpfs, large Rust/Tauri builds can fail while compiling or
+linking. Use a repo-local temp directory for those runs:
+
+```bash
+mkdir -p .irodori-local/tmp
+TMPDIR=$PWD/.irodori-local/tmp make desktop-build-verified
+```
+
 ### AppImage FUSE Dependency
-Arch Linux and CachyOS default to `fuse3`. To run built AppImages directly without extracting them, you can optionally install FUSE v2:
+
+Arch Linux and CachyOS default to `fuse3`. To run built AppImages directly
+without extracting them, you can optionally install FUSE v2:
+
 ```bash
 sudo pacman -S --needed fuse2
 ```
-If you do not want to install `fuse2`, you can execute the AppImage by extracting it inline using the environment variable:
+
+If you do not want to install `fuse2`, you can execute the AppImage by
+extracting it inline using the environment variable:
+
 ```bash
 APPIMAGE_EXTRACT_AND_RUN=1 ./Irodori-Table.AppImage
 ```

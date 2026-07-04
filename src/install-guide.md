@@ -9,6 +9,11 @@ Use the newest release for normal desktop installs. `cargo install` does not
 install the desktop application. It is only for the separate headless
 `irodori-server` binary in `irodori-kit`.
 
+This guide is for packaged desktop installs. Source build prerequisites and
+WebView troubleshooting live in the platform development guides:
+[Windows](windows-development.md), [macOS](macos-development.md), and
+[Linux](linux-development.md).
+
 ## Quick terminal install
 
 The shortest terminal path uses GitHub CLI. Install `gh` first if your shell
