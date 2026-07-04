@@ -6,7 +6,7 @@ managers. Keep secrets, tax/banking data, personal addresses, signing
 certificates, app-specific passwords, and store account IDs out of this file.
 Use a private local note or private archive for operational submission notes.
 
-Current product version: `0.6.0`.
+Current public release: `0.6.0`.
 
 ## Public listing metadata
 
@@ -30,7 +30,7 @@ Current product version: `0.6.0`.
 | Ads / tracking | None in this repository |
 | Account required | No hosted Irodori account required |
 | Primary binary | Tauri desktop app |
-| Headless binary | `irodori-server` |
+| Headless binary | `irodori-server` from `irodori-kit` |
 
 ## Package IDs
 
@@ -45,7 +45,7 @@ Current product version: `0.6.0`.
 | AUR binary package | `irodori-table-bin` |
 | Flatpak | `dev.irodori.table` |
 | Snap | `irodori-table` |
-| crates.io binary crate | `irodori-server` |
+| crates.io binary crate | None yet; `irodori-server` is git-installable from `irodori-kit` |
 
 ## Listing copy
 
@@ -124,8 +124,6 @@ Current app/repository assets:
 - `apps/desktop/src-tauri/icons/StoreLogo.png`
 - `apps/desktop/src-tauri/icons/Square*.png`
 - `src/irodori-icon.svg`
-- `packaging/linux/dev.irodori.table.desktop.template`
-- `packaging/appstream/dev.irodori.table.metainfo.xml.template`
 
 Still needed before store submission:
 
@@ -133,6 +131,8 @@ Still needed before store submission:
 - at least one 16:9 product screenshot showing the workbench;
 - optional short demo GIF/video for stores that support rich media;
 - signed/notarized release artifacts where the channel requires them.
+- committed package-manager, desktop-entry, and appstream manifest templates if
+  those channels become active.
 
 ## Channel checklist
 
@@ -162,40 +162,39 @@ Needed:
 
 ### Homebrew cask
 
-Status: template only.
+Status: planned; no template is committed yet.
 
-Use `packaging/package-managers/homebrew/irodori-table.rb.template` after the
-macOS release asset and sha256 are available. Submit to the appropriate tap or
-to the project-owned tap first.
+Create a cask after the macOS release asset and sha256 are available. Submit to
+the appropriate tap or to the project-owned tap first.
 
 ### Scoop
 
-Status: template only.
+Status: planned; no template is committed yet.
 
-Use `packaging/package-managers/scoop/irodori-table.json.template` after the
-Windows portable zip or installer strategy is stable. A portable zip is usually
-cleaner for Scoop than an interactive installer.
+Create a manifest after the Windows portable zip or installer strategy is
+stable. A portable zip is usually cleaner for Scoop than an interactive
+installer.
 
 ### winget
 
-Status: template only.
+Status: planned; no template is committed yet.
 
-Use `packaging/package-managers/winget/` after the Windows installer URL, sha256,
-publisher name, installer type, and installer switches are final.
+Create manifests after the Windows installer URL, sha256, publisher name,
+installer type, and installer switches are final.
 
 ### Chocolatey
 
-Status: template only.
+Status: planned; no template is committed yet.
 
-Use `packaging/package-managers/chocolatey/` if Chocolatey is a target channel.
-Keep the install script non-interactive and checksum-pinned.
+Create a package if Chocolatey is a target channel. Keep the install script
+non-interactive and checksum-pinned.
 
 ### AUR
 
-Status: template only.
+Status: planned; no template is committed yet.
 
-Use `packaging/package-managers/aur/PKGBUILD.template` for `irodori-table-bin`
-once the Linux AppImage artifact name and checksum are stable.
+Create a `PKGBUILD` for `irodori-table-bin` once the Linux AppImage artifact
+name and checksum are stable.
 
 ### Flatpak / Flathub
 
@@ -216,17 +215,21 @@ review. Treat this as separate from the existing AppImage path.
 
 Status: later.
 
-`cargo install --git https://github.com/hjosugi/irodori-table irodori-server`
-is the current Rust developer path. crates.io publication requires all
-`irodori-*` git/path dependencies to be published or removed from the publishable
-crate graph.
+The current git install path is:
+
+```bash
+cargo install --git https://github.com/hjosugi/irodori-kit --tag v0.5.0 --locked irodori-server
+```
+
+crates.io publication requires all `irodori-*` git/path dependencies to be
+published or removed from the publishable crate graph.
 
 ## Private doc boundary
 
 Keep this public:
 
 - product description, screenshots, homepage/support/privacy URLs;
-- package IDs, release URLs, checksums, manifest templates;
+- package IDs, release URLs, checksums, and manifest plans;
 - public troubleshooting and security-disclosure process.
 
 Keep private:

@@ -45,6 +45,8 @@
 - [Data source support status](data-source-support-status.md)
 - [Engine syntax reference](engine-syntax-reference.md)
 - [DB feature samples](db-feature-samples.md)
+- [Distribution and updates](distribution.md)
+- [Store and package registration](store-registration.md)
 - [A5:SQL reference](reference-a5sql.md)
 - [RSQL reference](reference-rsql.md)
 - [Support](support.md)

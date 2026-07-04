@@ -22,7 +22,7 @@ jobs:
       - uses: actions/checkout@v4
       - uses: peaceiris/actions-mdbook@v2
         with:
-          mdbook-version: latest
+          mdbook-version: "0.5.3"
       - run: mdbook build
       - uses: actions/configure-pages@v5
         with:
