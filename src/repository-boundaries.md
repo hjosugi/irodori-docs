@@ -90,8 +90,10 @@ or app-consumed source needs it.
 ## Parallel Agent Boundary
 
 Use
-[parallel-agent-architecture](https://hjosugi.github.io/irodori-docs/parallel-agent-architecture.html)
-and [agent-workstreams.json](agent-workstreams.json) when assigning work to
+[parallel-agent-architecture](parallel-agent-architecture.md)
+and
+[agent-workstreams.json](https://github.com/hjosugi/irodori-table/blob/main/registry/agent-workstreams.json)
+when assigning work to
 multiple coding agents. The default split is:
 
 - app/runtime/registry contract changes stay in `irodori-table`;

@@ -211,5 +211,5 @@ FROM materialized_views();
 - QuestDB `SAMPLE BY` docs - https://questdb.com/docs/query/sql/sample-by/
 - QuestDB `ASOF JOIN` docs - https://questdb.com/docs/query/sql/asof-join/
 - QuestDB `LATEST ON` docs - https://questdb.com/docs/query/sql/latest-on/
-- QuestDB metadata functions - https://questdb.com/docs/reference/function/meta/
+- QuestDB metadata functions - https://questdb.com/docs/query/functions/meta/
 - Irodori support matrix - [data-source-support-status](../data-source-support-status.md)

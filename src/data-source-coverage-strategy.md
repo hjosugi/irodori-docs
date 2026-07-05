@@ -168,7 +168,7 @@ Use these products to identify expected behavior, not to copy protected expressi
 - Neo4j Cypher docs: https://neo4j.com/docs/cypher-manual/current/
 - DBeaver supported database list: https://dbeaver.com/databases/
 - DataGrip feature reference: https://www.jetbrains.com/datagrip/features/
-- Apache Iceberg spec and REST catalog: https://iceberg.apache.org/spec/ and https://iceberg.apache.org/concepts/catalog/
+- Apache Iceberg spec and REST catalog: https://iceberg.apache.org/spec/ and https://iceberg.apache.org/rest-catalog-spec/
 - AWS S3 Tables (managed Iceberg): https://docs.aws.amazon.com/AmazonS3/latest/userguide/s3-tables.html
 - Snowflake authentication options: https://docs.snowflake.com/en/user-guide/admin-security-fed-auth-overview and https://docs.snowflake.com/en/user-guide/key-pair-auth
 - DuckDB SQL and extensions (incl. Iceberg/Parquet): https://duckdb.org/docs/

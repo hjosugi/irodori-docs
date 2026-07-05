@@ -5,7 +5,7 @@ Last checked: 2026-06-26 JST.
 This runbook covers every `DbEngine` currently declared by Irodori and explains
 how to contract/provision external services when local verification is not
 enough. The source of truth for engine support remains
-[`docs/data-source-support-status.md`](https://github.com/hjosugi/irodori-table/blob/main/docs/data-source-support-status.md) and
+[`registry/data-source-support-status.md`](https://github.com/hjosugi/irodori-table/blob/main/registry/data-source-support-status.md) and
 `apps/desktop/src-tauri/src/db/engine.rs`.
 
 ## Policy

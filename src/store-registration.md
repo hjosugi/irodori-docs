@@ -254,7 +254,7 @@ change:
 - Scoop app manifests: <https://github.com/ScoopInstaller/Scoop/wiki/App-Manifests>
 - Chocolatey package creation: <https://docs.chocolatey.org/en-us/create/create-packages/>
 - Arch package guidelines: <https://wiki.archlinux.org/title/Arch_package_guidelines>
-- Flathub submission: <https://docs.flathub.org/docs/for-app-authors/submission/>
+- Flathub submission: <https://docs.flathub.org/docs/for-app-authors/submission>
 - Snapcraft release docs: <https://snapcraft.io/docs/releasing-your-app>
 - App Store Connect app information: <https://developer.apple.com/help/app-store-connect/manage-app-information/set-app-information/>
-- Microsoft Partner Center submissions: <https://learn.microsoft.com/en-us/partner-center/developer/create-app-submission>
+- Microsoft Store developer account setup: <https://learn.microsoft.com/en-us/windows/apps/publish/partner-center/open-a-developer-account>
