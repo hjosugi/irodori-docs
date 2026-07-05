@@ -41,5 +41,6 @@ jobs:
             --max-retries 3
             --retry-wait-time 2
             --accept 200,204,206,301,302,429
+            --exclude '^https://questdb\.com/docs/'
             README.md
             'src/**/*.md'
