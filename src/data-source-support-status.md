@@ -1,7 +1,7 @@
 # Data Source Support Status
 
-Last generated: 2026-06-26 JST (hand-authored seed; target is auto-generation —
-see <https://hjosugi.github.io/irodori-docs/cheatsheet-autodoc-plan.html>).
+Last generated: 2026-06-26 JST (hand-authored seed; target is auto-generation
+from `irodori-table` registry inputs).
 
 This is the single inventory of **what Irodori connects to today vs. what is
 declared, planned, or not yet started**. The authoritative source of truth is the
@@ -136,6 +136,5 @@ surface beyond connection templates. They route through existing adapters:
   Lake, Hudi, Hive, and Athena all have marketplace connectors. Core still needs
   shared table/catalog UX and execution-backend contracts for those extensions.
 
-When section 1–4 membership changes, it should be regenerated from the registry,
-not hand-edited — see
-<https://hjosugi.github.io/irodori-docs/cheatsheet-autodoc-plan.html>.
+When section 1-4 membership changes, regenerate this page from the registry
+inputs rather than hand-editing the mirrored snapshot.

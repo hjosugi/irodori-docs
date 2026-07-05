@@ -68,4 +68,5 @@
 
 # Architecture Decisions
 
+- [0000 — ADR process](adr/0000-adr-process.md)
 - [0001 — Editor stack](adr/0001-editor-stack.md)

@@ -5,11 +5,11 @@ driver/dialect quirks. This doubles as the basis for the per-engine `SqlDialect`
 (SRC-001a) and as a reference for extension authors. All engines go through the
 same `Connection` trait (`apps/desktop/src-tauri/src/db/`).
 
-Related docs: `docs/data-source-support-status.md` is the coverage inventory (what
-connects today vs. what is declared/planned); `docs/cheatsheets/` holds the
-task-oriented, copy-pasteable per-engine pages; `docs/cheatsheet-autodoc-plan.md`
-covers how both get auto-generated. This file stays the deep driver/decoding
-reference.
+Related docs: `data-source-support-status.md` is the coverage inventory (what
+connects today vs. what is declared/planned), and `cheatsheets/` holds the
+task-oriented, copy-pasteable per-engine pages. Generated support-status and
+cheatsheet snapshots are mirrored from the registry and knowledge inputs in
+`irodori-table`. This file stays the deep driver/decoding reference.
 
 ## Coverage at a glance
 

@@ -5,11 +5,11 @@ the query model, and what are the per-engine quirks I will trip on.** These are 
 human-facing, copy-pasteable companion to the deeper `docs/engine-syntax-reference.md`
 (driver/decoding internals) and `docs/data-source-support-status.md` (coverage).
 
-Each cheatsheet is meant to be **generated** from the local knowledge base
-(`knowledge/irodori-knowledge.sqlite`) once the generator lands; until then a page
-may be hand-seeded (marked `<!-- seed -->`). The generation contract and the
-automatic data collection that feeds it are specified in
-`docs/cheatsheet-autodoc-plan.md`.
+Each cheatsheet is meant to be **generated** from the local knowledge inputs in
+`irodori-table` (`knowledge/cheatsheets/*.json` plus the knowledge DB). Until a
+page is generated, it may be hand-seeded and marked `<!-- seed -->`. Generator
+ownership and drift rules are tracked in
+[`repository-boundaries.md`](../repository-boundaries.md).
 
 ## Index
 
