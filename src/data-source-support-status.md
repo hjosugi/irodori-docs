@@ -10,8 +10,8 @@ dispatch in `apps/desktop/src-tauri/src/db.rs`. Roadmap intent lives in
 <https://hjosugi.github.io/irodori-docs/data-source-coverage-strategy.html>;
 this file reconciles intent against the code.
 
-For contract/provisioning and managed-service verification procedures, see
-<https://hjosugi.github.io/irodori-docs/external-db-contract-and-verification.html>.
+Managed-service verification procedures live outside the public user path; keep
+this page focused on selectable engine support and registry drift.
 
 Status legend:
 
