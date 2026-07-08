@@ -6,7 +6,11 @@ managers. Keep secrets, tax/banking data, personal addresses, signing
 certificates, app-specific passwords, and store account IDs out of this file.
 Use a private local note or private archive for operational submission notes.
 
-Current public release: `0.6.0`.
+Current public release state:
+
+- stable GitHub Release: `v0.7.32`;
+- latest lightweight prerelease: `v0.7.34`;
+- current `v0.7.x` assets: Linux AppImage only.
 
 ## Public listing metadata
 
@@ -30,7 +34,7 @@ Current public release: `0.6.0`.
 | Ads / tracking | None in this repository |
 | Account required | No hosted Irodori account required |
 | Primary binary | Tauri desktop app |
-| Headless binary | `irodori-server` from `irodori-kit` |
+| Headless binary | `irodori-server` from historical `irodori-kit v0.5.0` |
 
 ## Package IDs
 
@@ -130,7 +134,9 @@ Still needed before store submission:
 - screenshots for macOS, Windows, Linux;
 - at least one 16:9 product screenshot showing the workbench;
 - optional short demo GIF/video for stores that support rich media;
-- signed/notarized release artifacts where the channel requires them.
+- signed/notarized release artifacts where the channel requires them;
+- signed Windows and signed/notarized macOS `v0.7.x` artifacts;
+- updater `latest.json` from a successful stable workflow dispatch;
 - committed package-manager, desktop-entry, and appstream manifest templates if
   those channels become active.
 
@@ -138,7 +144,9 @@ Still needed before store submission:
 
 ### GitHub Releases
 
-Status: already wired by `.github/workflows/release.yml`.
+Status: lightweight Linux AppImage lane is live. The stable Windows/macOS/updater
+lane is wired in `.github/workflows/release.yml` but blocked on platform signing
+and notarization secrets.
 
 Before publishing a release:
 
@@ -150,14 +158,14 @@ Before publishing a release:
 
 ### Tauri updater
 
-Status: next.
+Status: stable workflow lane is wired; publication is blocked until all stable
+release signing gates pass.
 
 Needed:
 
-- generate the Tauri updater signing key;
-- store the private key in GitHub Actions secrets;
-- commit the public key and updater endpoint in `tauri.conf.json`;
-- emit updater artifacts from release builds;
+- configure the remaining Windows and macOS signing/notarization secrets;
+- dispatch the `stable` workflow for an existing `v*` tag;
+- verify updater `latest.json` and signatures before marking the release stable;
 - document rollback when an updater artifact is bad.
 
 ### Homebrew cask

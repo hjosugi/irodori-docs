@@ -1,23 +1,29 @@
-# Distribution & updates
+# Distribution & Updates
 
-How users get Irodori Table and how it updates. Current public release:
-**0.6.0** (`v0.6.0`, published 2026-07-02).
+How users get Irodori Table and how it updates.
+
+- Current stable GitHub Release: **0.7.32** (`v0.7.32`, published
+  2026-07-05).
+- Current lightweight prerelease: **0.7.34** (`v0.7.34`, published
+  2026-07-08).
 
 ## Already in place
 
 `.github/workflows/release.yml` — on a `v*` tag push, `tauri-action` builds
-installers for **macOS**, **Windows** (`.msi`/NSIS), and **Linux**
-(`.deb`/`.rpm`/`.AppImage`) on the matrix runners and creates a GitHub Release.
-The download channel is live today; publish a release tag such as `v0.6.0`.
+a lightweight **Linux AppImage** and creates a GitHub prerelease. The manual
+`stable` workflow channel is defined for updater artifacts plus signed Windows
+and signed/notarized macOS artifacts, but it requires the platform signing and
+notarization secrets before it can publish.
 
 ## Channel matrix
 
 | Channel | For | Status | Notes |
 | --- | --- | --- | --- |
-| GitHub Releases (installers) | end users | ✅ exists | `release.yml`; cut by tagging the current release, e.g. `v0.6.0` |
-| Tauri in-app updater | end users (auto-update) | ⬜ next | the fastest *update* path for the GUI; needs a signing key |
-| Terminal installer download | end users | ✅ exists | use `gh release download` and install the `.deb`, `.rpm`, `.AppImage`, `.dmg`, or `.msi` |
-| `cargo install --git` | Rust devs (headless server) | ✅ exists | installs `irodori-server` from `irodori-kit`, not the desktop app |
+| GitHub Releases (Linux AppImage) | Linux users | ✅ exists | tag pushes publish the lightweight AppImage prerelease lane |
+| Signed Windows/macOS releases | end users | ⬜ blocked | stable workflow is wired; platform signing/notarization secrets are still required |
+| Tauri in-app updater | end users (auto-update) | ⬜ blocked | stable workflow can publish `latest.json` after updater and platform signing gates pass |
+| Terminal package download | Linux users | ✅ exists | use `gh release download` and run the `.AppImage` |
+| `cargo install --git` | Rust devs (headless server) | ✅ exists | installs `irodori-server` from the historical `irodori-kit v0.5.0` tag, not the desktop app |
 | crates.io | Rust devs | ⬜ later | crates.io forbids git/path deps; all `irodori-*` must be published first |
 | Homebrew cask / Scoop / winget | mac/Windows | ⬜ later | manifests auto-bumped from releases |
 | AUR / Flatpak | Linux | ⬜ later | from releases |
@@ -29,35 +35,31 @@ template paths until those files exist in `irodori-table`.
 
 ## Quick terminal install
 
-Use GitHub CLI to fetch the newest matching release asset without opening a
-browser. When no release tag is passed, `gh release download` uses the latest
-release:
+Use GitHub CLI to fetch the newest stable AppImage without opening a browser:
 
 ```bash
 tmp="$(mktemp -d)"
-gh release download --repo hjosugi/irodori-table --pattern "*.deb" --dir "$tmp"
-sudo apt install "$tmp"/*.deb
+gh release download --repo hjosugi/irodori-table --pattern "*.AppImage" --dir "$tmp"
+chmod +x "$tmp"/*.AppImage
+"$tmp"/*.AppImage
 ```
 
-Replace the pattern and install command as needed:
+Use an explicit tag to test a lightweight prerelease:
 
-| Platform | Pattern | Install command |
-| --- | --- | --- |
-| Debian/Ubuntu | `*.deb` | `sudo apt install "$tmp"/*.deb` |
-| Fedora/RHEL | `*.rpm` | `sudo dnf install "$tmp"/*.rpm` |
-| Linux portable | `*.AppImage` | `chmod +x "$tmp"/*.AppImage && "$tmp"/*.AppImage` |
-| macOS | `*.dmg` | `open "$tmp"/*.dmg` |
-| Windows PowerShell | `*.msi` | launch the downloaded `.msi` |
+```bash
+tmp="$(mktemp -d)"
+gh release download v0.7.34 --repo hjosugi/irodori-table --pattern "*.AppImage" --dir "$tmp"
+chmod +x "$tmp"/*.AppImage
+"$tmp"/*.AppImage
+```
 
-The current `v0.6.0` assets are:
+The current checked assets are:
 
-- `Irodori.Table_0.6.0_amd64.deb`
-- `Irodori.Table-0.6.0-1.x86_64.rpm`
-- `Irodori.Table_0.6.0_amd64.AppImage`
-- `Irodori.Table_0.6.0_x64_en-US.msi`
-- `Irodori.Table_0.6.0_x64-setup.exe`
-- `Irodori.Table_0.6.0_aarch64.dmg`
-- `Irodori.Table_aarch64.app.tar.gz`
+- `v0.7.32`: `Irodori.Table_0.7.32_amd64.AppImage`
+- `v0.7.34`: `Irodori.Table_0.7.34_amd64.AppImage`
+
+Current `v0.7.x` releases do not publish `.deb`, `.rpm`, `.dmg`, `.msi`, setup
+`.exe`, updater, or macOS app archive assets.
 
 ## On "cargo is fastest"
 
@@ -65,7 +67,8 @@ The current `v0.6.0` assets are:
 the Tauri app bundles a webview, native packaging metadata, and a built frontend.
 Use GitHub Release installers for the desktop app.
 
-For the headless local HTTP API, install `irodori-server` from `irodori-kit`:
+For the headless local HTTP API, install `irodori-server` from the last
+`irodori-kit` tag that shipped it as a workspace package:
 
 ```bash
 cargo install --git https://github.com/hjosugi/irodori-kit --tag v0.5.0 --locked irodori-server
@@ -76,16 +79,14 @@ The old `irodori-table` repo command is no longer correct because
 
 ## Recommended order
 
-1. **Tag the current release** → installers ship immediately (channel already
-   built; for the current docs, that means `v0.6.0`).
-2. **Tauri updater** for in-app auto-update (the real "get updates" for the GUI):
-   - `cd apps/desktop && npm run tauri signer generate` → keypair.
-   - Add the private key as the `TAURI_SIGNING_PRIVATE_KEY` GitHub Actions secret.
-   - In `tauri.conf.json`: set `bundle.createUpdaterArtifacts = true` and
-     `plugins.updater` with the public key + an `endpoints` entry pointing at the
-     releases `latest.json` (tauri-action emits it per release).
-3. **Keep desktop terminal installs installer-based** — document
-   `gh release download` paths for release assets; keep `cargo install` scoped
-   to the `irodori-kit` headless server.
-4. **Package managers** (brew/scoop/winget/AUR/Flatpak) once you want them — each
-   is a small manifest auto-updated from the GitHub Release assets.
+1. **Keep lightweight tags moving** so Linux AppImage prereleases continue to
+   publish from main.
+2. **Finish stable signing gates** by adding the Windows signing and macOS
+   signing/notarization secrets required by `release.yml`.
+3. **Dispatch the `stable` workflow** for an existing `v*` tag after the secrets
+   are present; verify updater `latest.json`, signatures, and platform assets
+   before marking the release stable.
+4. **Keep desktop terminal installs package-based** with `gh release download`;
+   keep `cargo install` scoped to the historical `irodori-kit` headless server.
+5. **Package managers** (brew/scoop/winget/AUR/Flatpak) once the stable assets
+   and checksums are durable enough for manifests.

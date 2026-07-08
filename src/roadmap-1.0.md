@@ -2,7 +2,7 @@
 
 1.0 is the **excellent, stable core** — not every roadmap item. The strategic call
 is to ship a polished cross-platform SQL GUI for the core SQL engines and
-explicitly defer the exotic surfaces. Current version: **0.6.0**.
+explicitly defer the exotic surfaces. Current app version: **0.7.34**.
 
 ## P0 — blockers (must do for 1.0)
 
@@ -20,9 +20,10 @@ explicitly defer the exotic surfaces. Current version: **0.6.0**.
 4. **UI / theme completeness:** finish `THEME-001b` (no hardcoded colors — all
    theme variables) + `THEME-002` (theme import/save/switch). *(In progress: the
    AI dialog + terminal were converted to theme variables.)*
-5. **Release mechanics:** code signing/notarization (macOS/Windows), the Tauri
-   in-app updater (see [distribution.md](distribution.md)), and green CI (typegen
-   drift, unit, browser smoke, Rust tests, security).
+5. **Release mechanics:** lightweight Linux releases and CI gates are working;
+   stable code signing/notarization (macOS/Windows) and the Tauri in-app updater
+   still require the stable release secrets and a successful stable workflow
+   dispatch (see [distribution.md](distribution.md)).
 
 ## P1 — strongly wanted
 
