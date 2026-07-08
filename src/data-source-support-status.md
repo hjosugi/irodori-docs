@@ -41,8 +41,6 @@ Status legend:
 | SQLite | `sqlite` | file / sqlx | `db/sqlite.rs` | — | Verified (unit) | Built-in |
 | Oracle | `oracle` | Thin TNS / `oracle-rs` | `db/oracle.rs` | 1521 | Verified | `legacy-connectors` |
 | SQL Server | `sqlserver` | TDS / tiberius | `db/mssql.rs` | 1433 | Verified | `legacy-connectors` |
-| DuckDB | `duckdb` | embedded libduckdb | `db/duck.rs` | — | Verified | `duckdb` |
-| MotherDuck | `motherduck` | DuckDB service / extension | `irodori.motherduck` | 443 | Extension | Marketplace extension |
 | CockroachDB | `cockroachdb` | Postgres wire / sqlx | (via `postgres.rs`) | 26257 | Verified | Built-in |
 | YugabyteDB (YSQL) | `yugabytedb` | Postgres wire / sqlx | (via `postgres.rs`) | 5433 | Wired | Built-in |
 | Redshift | `redshift` | Postgres wire / sqlx | (via `postgres.rs`) | 5439 | Wired (AWS, no local container) | Built-in |
@@ -54,33 +52,39 @@ Status legend:
 | Neo4j | `neo4j` | Bolt / neo4rs | `db/neo4j.rs` | 7687 | Wired (graph) — see cheatsheet | `legacy-connectors` |
 | Redis | `redis` | RESP / redis | `db/redis.rs` | 6379 | Wired (adapter) | `legacy-connectors` |
 | Cassandra | `cassandra` | CQL / scylla driver | `db/cassandra.rs` | 9042 | Wired (adapter) | `legacy-connectors` |
-| ClickHouse | `clickhouse` | HTTP | `db/clickhouse.rs` | 8123 | Wired (HTTP client) | `legacy-connectors` |
-| Snowflake | `snowflake` | HTTP | `db/snowflake.rs` | 443 | Wired (password/JWT subset) | `legacy-connectors` |
+| ClickHouse | `clickhouse` | HTTP | `db/clickhouse.rs` | 8123 | Wired (HTTP client) | Built-in |
+| Snowflake | `snowflake` | HTTP | `db/snowflake.rs` | 443 | Wired (password/JWT subset) | Built-in |
 | BigQuery | `bigquery` | HTTP | `db/bigquery.rs` | 443 | Wired (HTTP client) | `legacy-connectors` |
 | Bigtable | `bigtable` | gRPC/HTTP | `db/bigtable.rs` | 443 | Wired (adapter) | `legacy-connectors` |
-| InfluxDB | `influxdb` | HTTP (SQL/v3) | `db/influx.rs` | 8086 | Wired (adapter) | `legacy-connectors` |
+| InfluxDB | `influxdb` | HTTP (SQL/v3) | `db/influx.rs` | 8086 | Wired (adapter) | Built-in |
 | ScyllaDB | `scylladb` | CQL / scylla driver | (via `cassandra.rs`) | 9042 | Wired (CQL-compatible) | `legacy-connectors` |
 | QuestDB | `questdb` | Postgres wire / sqlx | (via `postgres.rs`) | 8812 | Wired | Built-in |
 
 > Maturity is a coverage signal, not a UX guarantee. "Wired (adapter)" means the
 > connect/query path exists; first-class browsing, completion, editing,
 > explain/profile, and visualization per source remain tracked by SRC tickets.
-> Release builds pass `--features legacy-connectors,duckdb`; local default
-> development builds may omit feature-gated connectors for speed.
+> DuckDB and MotherDuck ship through marketplace connector extensions instead of
+> embedded libduckdb in the core desktop build. Local custom builds may still omit
+> optional legacy connectors for speed. When a custom build omits an optional
+> connector, the app reports that the selected data source is unavailable in this
+> desktop build and links back to this table instead of exposing developer build
+> steps.
 
 ## 2. Pending (recognized, scaffolded, returns "not ready")
 
 None today. If an adapter has a dedicated `Wire` but intentionally returns a
 not-ready error, list it here instead of mixing it with production connectors.
 
-## 3. Recognized, extension required (in the enum, rejected at connect)
+## 3. Marketplace / extension-required engines
 
-These appear in `DbEngine` but `is_unimplemented_wire()` rejects them before a
-connection is opened. Most public connector targets ask the user to install
-the matching installable connector from `registry/catalog/index.json`.
+These appear in `DbEngine`, but the core desktop build has no embedded driver for
+them. The app asks the user to install the matching connector from
+`registry/catalog/index.json` before a connection can be opened.
 
 | Engine | `DbEngine` id | Family | Closest existing wire | Note |
 |---|---|---|---|---|
+| DuckDB | `duckdb` | Analytical | `DuckDb` | Installable connector; owns local file and in-memory workflows without compiling libduckdb into the app. |
+| MotherDuck | `motherduck` | Analytical / lakehouse | `DuckDb` | Installable connector; owns DuckDB/MotherDuck service workflows. |
 | Memgraph | `memgraph` | Graph (Bolt/Cypher) | `Neo4j` | Installable connector; can reuse the Neo4j/Bolt path internally. |
 | Qdrant | `qdrant` | Vector | — | Installable vector connector extension. |
 | Milvus | `milvus` | Vector | — | Installable vector connector extension. |
@@ -127,14 +131,18 @@ surface beyond connection templates. They route through existing adapters:
 ## 6. Gaps worth deciding on
 
 - **Vector DBs are extension-first.** Qdrant/Milvus/Pinecone are registry entries
-  with marketplace extensions; core still needs the shared vector source-type
-  contract for collection/index browsing and similarity-search query surfaces.
+  with marketplace extensions. Their shared `vector` source-type contract is
+  projected into the catalog for collection/index browsing, vector metadata,
+  similarity search, filtered/hybrid search, and vector-neighbor result views.
 - **Memgraph is extension-first.** It speaks Bolt/Cypher like Neo4j; the extension
   can reuse the Neo4j path internally before core promotes it to a wired adapter.
 - **ScyllaDB** now rides the existing `cassandra.rs` CQL path; the remaining work is verification against a real ScyllaDB instance and source-specific UX polish.
 - **Iceberg/lakehouse** is now extension-first: Apache Iceberg, S3 Tables, Delta
-  Lake, Hudi, Hive, and Athena all have marketplace connectors. Core still needs
-  shared table/catalog UX and execution-backend contracts for those extensions.
+  Lake, Hudi, Hive, Athena, MotherDuck, DuckDB, and Databricks all have
+  marketplace connectors or recognized entries. Their shared `lakehouse`
+  source-type contract is projected into the catalog for catalog/namespace/table
+  browsing, table-format metadata, execution-backend selection, catalog
+  credentials, and starter query templates.
 
 When section 1-4 membership changes, regenerate this page from the registry
 inputs rather than hand-editing the mirrored snapshot.
