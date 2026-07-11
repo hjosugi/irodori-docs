@@ -12,6 +12,7 @@ on:
 
 permissions:
   contents: write
+  actions: write # to dispatch the Pages deploy after a bot push (see below)
 
 concurrency:
   group: knowledge-report-sync
@@ -32,9 +33,11 @@ jobs:
         run: python3 tools/check-summary-coverage.py
 
       - name: Commit and push when changed
+        id: commit
         run: |
           if git diff --quiet -- src/knowledge-refresh-report.md; then
             echo "No report changes."
+            echo "pushed=false" >> "$GITHUB_OUTPUT"
             exit 0
           fi
           git config user.name "github-actions[bot]"
@@ -43,3 +46,12 @@ jobs:
           git commit -m "docs: sync knowledge refresh report from irodori-table"
           git pull --rebase origin main
           git push origin main
+          echo "pushed=true" >> "$GITHUB_OUTPUT"
+
+      # Pushes made with GITHUB_TOKEN do not fire push-triggered workflows
+      # (recursion guard), so the Pages deploy must be dispatched explicitly.
+      - name: Deploy Pages for the synced report
+        if: steps.commit.outputs.pushed == 'true'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main --repo "$GITHUB_REPOSITORY"
