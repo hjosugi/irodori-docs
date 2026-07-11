@@ -68,6 +68,7 @@
 # Cheatsheets
 
 - [Overview](cheatsheets/README.md)
+  - [Overview (日本語)](cheatsheets/README.ja.md)
   - [PostgreSQL](cheatsheets/postgres.md)
   - [Neo4j](cheatsheets/neo4j.md)
   - [QuestDB](cheatsheets/questdb.md)
