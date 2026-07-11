@@ -61,6 +61,9 @@ Optional fields:
   `monthly`.
 - `enabled`: defaults to `true`; set to `false` to keep a source registered but
   skip network refresh.
+- `fetchHeaders`: extra HTTP request headers for this source, merged over the
+  refresh defaults (`accept`, `accept-language: en`, and the bot user-agent).
+  Use it for upstreams that need a specific header to serve stable content.
 - `notes`: short reason this source matters to Irodori implementation work.
 
 The refresh script maps `sourceType` to the SQLite `source_type` column and keeps
@@ -165,7 +168,10 @@ node tools/knowledge/query.mjs --notes driver
   each month, fetches all enabled sources, regenerates the cheatsheets and the
   app knowledge pack, and opens one consolidated PR whose body is the run
   digest. The digest is committed as `registry/knowledge-refresh-report.md` and
-  mirrored to [knowledge-refresh-report.md](knowledge-refresh-report.md).
+  mirrored automatically to
+  [knowledge-refresh-report.md](knowledge-refresh-report.md) by this repo's
+  `knowledge-report-sync.yml` workflow (daily check and manual dispatch) — no
+  manual docs step remains in the monthly cycle.
 - Static delivery: the app never fetches upstream docs. `tools/knowledge/pack.mjs`
   derives `registry/knowledge-pack.json` and the app-bundled copy from the
   committed `knowledge/pack-facts.json`; the in-app Knowledge panel reads the

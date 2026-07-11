@@ -1,0 +1,45 @@
+name: Knowledge report sync
+
+# Mirrors the irodori-table generated knowledge refresh report into the book,
+# so the monthly refresh needs no manual docs step: once the refresh PR merges
+# in irodori-table, this job picks the report up (daily check, or run it on
+# demand) and commits the mirror directly to main, which redeploys Pages.
+
+on:
+  schedule:
+    - cron: "41 7 * * *" # daily 07:41 UTC; exits without commit when unchanged
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: knowledge-report-sync
+  cancel-in-progress: false
+
+jobs:
+  sync:
+    name: Mirror the refresh report
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Regenerate the mirrored page
+        run: python3 tools/sync-knowledge-report.py
+
+      - name: Verify SUMMARY coverage
+        run: python3 tools/check-summary-coverage.py
+
+      - name: Commit and push when changed
+        run: |
+          if git diff --quiet -- src/knowledge-refresh-report.md; then
+            echo "No report changes."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add src/knowledge-refresh-report.md
+          git commit -m "docs: sync knowledge refresh report from irodori-table"
+          git pull --rebase origin main
+          git push origin main
