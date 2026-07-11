@@ -18,6 +18,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # mdBook silently skips src pages missing from SUMMARY.md, so links to
+      # them 404 on the published site; fail fast before the slow build.
+      - name: Check SUMMARY.md coverage
+        run: python3 tools/check-summary-coverage.py
+
       - name: Install mdBook
         run: cargo install mdbook --locked
 

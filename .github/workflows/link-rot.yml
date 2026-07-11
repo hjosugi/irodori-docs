@@ -1,0 +1,48 @@
+name: Link rot report
+
+# Monthly deep link audit. Unlike the PR job in ci.yml (which accepts 301/302
+# so transient upstream moves never block contributors), this run treats
+# permanent redirects as failures and checks anchors, so moved or retired
+# upstream pages surface as a report issue instead of accumulating silently.
+
+on:
+  schedule:
+    - cron: "23 6 2 * *" # 2nd of each month, 06:23 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  audit:
+    name: Audit links (no redirects accepted)
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Check links strictly
+        id: lychee
+        uses: lycheeverse/lychee-action@v2
+        with:
+          fail: false
+          output: ./lychee-report.md
+          args: >-
+            --verbose
+            --no-progress
+            --max-concurrency 8
+            --max-retries 3
+            --retry-wait-time 2
+            --include-fragments
+            --accept 200,204,206,429
+            --exclude '^https://questdb\.com/docs/'
+            README.md
+            'src/**/*.md'
+
+      - name: Open a report issue
+        if: steps.lychee.outputs.exit_code != 0
+        uses: peter-evans/create-issue-from-file@v5
+        with:
+          title: "Monthly link rot report"
+          content-filepath: ./lychee-report.md
