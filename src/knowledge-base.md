@@ -58,7 +58,7 @@ Optional fields:
 - `official`: defaults to `true`; set to `false` only for clearly labeled
   non-official references.
 - `cadence`: refresh expectation such as `weekly` or `monthly`; defaults to
-  `weekly`.
+  `monthly`.
 - `enabled`: defaults to `true`; set to `false` to keep a source registered but
   skip network refresh.
 - `notes`: short reason this source matters to Irodori implementation work.
@@ -161,7 +161,15 @@ node tools/knowledge/query.mjs --notes driver
 ## Automation Direction
 
 - Local: run the refresh script manually while developing.
-- Scheduled: later add a weekly GitHub Actions job or local cron that refreshes sources and opens a report.
+- Scheduled: the `knowledge-refresh.yml` GitHub Actions job runs on the 1st of
+  each month, fetches all enabled sources, regenerates the cheatsheets and the
+  app knowledge pack, and opens one consolidated PR whose body is the run
+  digest. The digest is committed as `registry/knowledge-refresh-report.md` and
+  mirrored to [knowledge-refresh-report.md](knowledge-refresh-report.md).
+- Static delivery: the app never fetches upstream docs. `tools/knowledge/pack.mjs`
+  derives `registry/knowledge-pack.json` and the app-bundled copy from the
+  committed `knowledge/pack-facts.json`; the in-app Knowledge panel reads the
+  bundled pack and can refresh on demand from the published registry copy.
 - Large index builds: source snapshots, generated facts, implementation notes,
   schema metadata, and query-history search indexes must be built through the
   shared job runtime with progress, cancellation, checkpoint/resume, bounded

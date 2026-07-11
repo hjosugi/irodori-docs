@@ -45,6 +45,7 @@
 # Reference
 
 - [Data source support status](data-source-support-status.md)
+- [Knowledge refresh report](knowledge-refresh-report.md)
 - [External DB contract and verification](external-db-contract-and-verification.md)
 - [Engine syntax reference](engine-syntax-reference.md)
 - [DB feature samples](db-feature-samples.md)
