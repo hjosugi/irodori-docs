@@ -29,7 +29,7 @@ store. It should not duplicate the product backlog.
   [implementation-architecture.md](implementation-architecture.md).
 - Parallel-worker ownership and handoffs belong in
   [parallel-agent-architecture.md](parallel-agent-architecture.md) and the
-  table repo's `docs/agent-workstreams.json`.
+  table repo's `registry/agent-workstreams.json`.
 
 When a task depends on vendor behavior or DB-client precedent, query this knowledge
 base first, then record the implementation outcome in the owning task doc. A

@@ -14,6 +14,14 @@ preferred-dark-theme = "navy"
 additional-css = ["irodori.css"]
 additional-js = ["irodori.js"]
 
+[output.html.redirect]
+# Retired pages (content moved to the private archive); keep inbound URLs
+# from sibling repos working by pointing at the closest public successor.
+"/feature-matrix.html" = "data-source-support-status.html"
+"/production-readiness.html" = "roadmap-1.0.html"
+"/implementation-backlog.html" = "roadmap-1.0.html"
+"/cheatsheet-autodoc-plan.html" = "knowledge-base.html"
+
 [output.html.search]
 enable = true
 

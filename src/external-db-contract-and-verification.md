@@ -223,7 +223,7 @@ Cleanup:
 References:
 
 - Neon project creation and default resources: <https://neon.com/docs/manage/projects>
-- Neon API prerequisites and authentication: <https://neon.com/docs/reference/api-reference>
+- Neon API prerequisites and authentication: <https://neon.com/docs/reference/api>
 - Neon project creation API: <https://api-docs.neon.tech/reference/createproject>
 
 ## Snowflake
@@ -376,10 +376,10 @@ terraform destroy
 
 References:
 
-- Google Cloud Terraform prerequisite flow: <https://cloud.google.com/docs/terraform/resource-management/managing-infrastructure-as-code>
-- BigQuery dataset Terraform sample: <https://cloud.google.com/bigquery/docs/samples/bigquery-create-dataset>
-- Google service account creation: <https://cloud.google.com/iam/docs/service-accounts-create>
-- Google service account key management: <https://cloud.google.com/iam/docs/keys-create-delete>
+- Google Cloud Terraform prerequisite flow: <https://docs.cloud.google.com/docs/terraform/resource-management/managing-infrastructure-as-code>
+- BigQuery dataset Terraform sample: <https://docs.cloud.google.com/bigquery/docs/samples/bigquery-create-dataset>
+- Google service account creation: <https://docs.cloud.google.com/iam/docs/service-accounts-create>
+- Google service account key management: <https://docs.cloud.google.com/iam/docs/keys-create-delete>
 
 ## Bigtable
 
@@ -465,8 +465,8 @@ rm -f ~/.cbtrc
 
 References:
 
-- Bigtable quickstart instance/table/read/write flow: <https://cloud.google.com/bigtable/docs/create-instance-write-data-cbt-cli>
-- Bigtable IAM access control: <https://cloud.google.com/bigtable/docs/access-control>
+- Bigtable quickstart instance/table/read/write flow: <https://docs.cloud.google.com/bigtable/docs/create-instance-write-data-cbt-cli>
+- Bigtable IAM access control: <https://docs.cloud.google.com/bigtable/docs/access-control>
 
 ## Pinecone
 
@@ -670,7 +670,7 @@ terraform destroy
 References:
 
 - Databricks Terraform provider: <https://docs.databricks.com/aws/en/dev-tools/terraform/>
-- Databricks SQL warehouses: <https://docs.databricks.com/aws/en/sql/admin/sql-endpoints>
+- Databricks SQL warehouses: <https://docs.databricks.com/aws/en/compute/sql-warehouse/create>
 
 ### Apache Iceberg and catalogs
 
