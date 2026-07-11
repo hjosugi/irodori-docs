@@ -3,8 +3,9 @@
 Mirrored from the `irodori-table` generated report
 [`registry/knowledge-refresh-report.md`](https://github.com/hjosugi/irodori-table/blob/main/registry/knowledge-refresh-report.md),
 produced by the monthly scheduled knowledge refresh (`knowledge-refresh.yml`,
-1st of each month). The source of truth is the table repo; update this mirror
-when the monthly refresh PR merges.
+1st of each month). The source of truth is the table repo; this mirror is
+refreshed automatically by `knowledge-report-sync.yml` (daily check and
+manual dispatch).
 
 Run started 2026-07-11T08:01:15.937Z, finished 2026-07-11T08:01:30.553Z (UTC).
 
